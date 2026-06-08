@@ -1,0 +1,40 @@
+# Third-Party Licenses & Attribution
+
+Most skills bundled in this folder come from the **claude-scientific-skills**
+collection by **K-Dense Inc.**, distributed under the MIT License (below). They are
+redistributed here under that license, with attribution.
+
+`polished-pdf-reports` was authored by this team's maintainer and is included under
+the team's own terms (see the repo's top-level license, if any).
+
+> **Note:** The Anthropic-proprietary skills (`pdf`, `docx`, `xlsx`, `pptx`) are **not**
+> included in this repo — their license forbids redistribution. They ship with Claude
+> itself, so Claude can already read/create those file types without anything here.
+
+---
+
+## MIT License — K-Dense Inc.
+
+```
+MIT License
+
+Copyright (c) 2025 K-Dense Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
