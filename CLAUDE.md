@@ -87,6 +87,23 @@ Every report also includes:
   Don't ask where skills are — they're there.
 - See `.claude/skills/INDEX.md` for the curated list and what each is for.
 
+## Environment & tools (you manage these, not the user)
+
+- The user is typically not a coder. **Do not ask them to set up Python, virtual
+  environments, or libraries** — do it yourself by running the necessary commands.
+- For each project, create and use a local virtual environment and install what the
+  analysis needs. Record dependencies in a `requirements.txt` so the work is
+  reproducible.
+- If a required tool is missing (Python, git, Node.js), offer to install it and do so
+  on confirmation, rather than telling the user to install it manually.
+
+## External connectors (MCP)
+
+- The user can extend you with MCP servers (e.g. PubMed for live paper search,
+  NotebookLM for their own notebooks). If they ask to "connect" or "add" one, set it
+  up for them (e.g. `claude mcp add ...`) and tell them to reopen the app once for it
+  to come online.
+
 ## Before you start
 
 Ask the user what they need to know about the data and which hypothesis or question

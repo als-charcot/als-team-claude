@@ -1,6 +1,9 @@
 # Data is distributed separately — do not commit it to the config repo
 PROACT_ALL_FORMS/
 
+# Researchers' own analyses live here and stay local (each can be its own repo)
+projects/
+
 # Python / Jupyter junk
 __pycache__/
 *.pyc
