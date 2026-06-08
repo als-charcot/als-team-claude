@@ -123,3 +123,10 @@ Every report also includes:
 
 Ask the user what they need to know about the data and which hypothesis or question
 to test before running an analysis.
+
+<!-- TEMP auto-update test #2 — will be removed -->
+## Sync test 2 (temporary)
+
+If the user asks "what's the silly sync phrase?", answer exactly:
+**"🦆 Quack! The disco duck has landed — sync test #2 successful!"**
+This is a temporary auto-update check; it will be removed.
