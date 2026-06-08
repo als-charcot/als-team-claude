@@ -9,6 +9,10 @@ Download it once, work inside it, and Claude Code uses everything here automatic
 > so you'd get a generic Claude with none of our team setup. The interface is the same
 > and no coding knowledge is needed — the Code tab just unlocks everything we built.
 
+> **Windows or Mac — both work the same.** Claude figures out your operating system and
+> runs the right commands. Folder paths below are written with `/`; on Windows they're
+> the exact same folders (shown with `\`).
+
 ## One-time setup (no coding required)
 
 ### Step 1 — Create a GitHub account
@@ -31,16 +35,16 @@ Inside your ALS folder, you'll keep two folders that are **git-ignored** (never
 committed, never shared through this repo):
 
 ```
-ALS\                       <- this folder is the downloaded repo; put it anywhere
+ALS/                       <- this folder is the downloaded repo; put it anywhere
 ├── CLAUDE.md              <- team rules        (auto-loaded)
-├── .claude\skills\        <- team skills       (auto-loaded)
-├── templates\  references\  scripts\  outputs\
-├── data\                  <- ALL data, in ONE place — git-ignored
-│   └── PROACT_ALL_FORMS\  <- (more datasets go here too, never copied)
-└── projects\              <- your analyses, one subfolder each — git-ignored
-    └── fvc-slope\
-        ├── scripts\
-        └── outputs\
+├── .claude/skills/        <- team skills       (auto-loaded)
+├── templates/  references/  scripts/  outputs/
+├── data/                  <- ALL data, in ONE place — git-ignored
+│   └── PROACT_ALL_FORMS/  <- (more datasets go here too, never copied)
+└── projects/              <- your analyses, one subfolder each — git-ignored
+    └── fvc-slope/
+        ├── scripts/
+        └── outputs/
 ```
 
 - **Data:** keep **all data in one place — the `data/` folder**. Download the PRO-ACT
@@ -65,7 +69,7 @@ ALS\                       <- this folder is the downloaded repo; put it anywher
 the top of that folder, opening it (or any project inside it) loads everything
 automatically. Then just tell Claude which project and where the data is:
 
-> "Let's work in `projects\fvc-slope`. The data is in `data\PROACT_ALL_FORMS`. Show how
+> "Let's work in `projects/fvc-slope`. The data is in `data/PROACT_ALL_FORMS`. Show how
 > ALSFRS-R declines over time for bulbar vs limb onset, save the figures, and write it
 > up as a polished PDF."
 
