@@ -7,13 +7,15 @@ get others' updates.
 
 ## Data
 
+- **All data lives in one place: the `data/` folder** at the workspace root (e.g.
+  `data/PROACT_ALL_FORMS/`). Every analysis reads from there — **never copy data into a
+  project folder.** `data/` is git-ignored (distributed separately, not committed).
 - We work with **de-identified PRO-ACT** data (Pooled Resource Open-Access ALS
-  Clinical Trials). **No HIPAA-protected PHI is present.** Do not apply
-  patient-anonymization friction to PRO-ACT — it is already de-identified.
-- Data lives in `PROACT_ALL_FORMS/` — a folder of CSVs, one per clinical form.
+  Clinical Trials), in `data/PROACT_ALL_FORMS/` — CSVs, one per clinical form.
+  **No HIPAA-protected PHI is present**; do not apply patient-anonymization friction.
 - **`subject_id` is the join key** across all forms. Join on it to combine forms.
-- If anyone ever loads non-de-identified data, it belongs in a separate folder under
-  separate handling — do not mix it in here.
+- Additional datasets go in their own subfolder under `data/`. Non-de-identified data
+  belongs under separate handling — do not mix it in.
 
 ## How to work (especially for non-coders)
 

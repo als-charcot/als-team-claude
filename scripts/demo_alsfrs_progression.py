@@ -23,9 +23,10 @@ import matplotlib.pyplot as plt
 from scipy import stats
 
 # ── SET THIS TO YOUR LOCAL PROACT FOLDER ─────────────────────────────────────
-PROACT_DIR = r"PROACT_ALL_FORMS"
+# All data lives in the ONE shared data/ folder — never copy it into a project.
+PROACT_DIR = r"data/PROACT_ALL_FORMS"
 # Example absolute path (Windows):
-#   PROACT_DIR = r"C:\Users\yourname\Documents\PROACT_ALL_FORMS"
+#   PROACT_DIR = r"C:\Users\yourname\ALS\data\PROACT_ALL_FORMS"
 # ─────────────────────────────────────────────────────────────────────────────
 
 OUT = "outputs"

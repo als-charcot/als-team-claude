@@ -35,17 +35,19 @@ ALS\                       <- this folder is the downloaded repo; put it anywher
 ├── CLAUDE.md              <- team rules        (auto-loaded)
 ├── .claude\skills\        <- team skills       (auto-loaded)
 ├── templates\  references\  scripts\  outputs\
-├── PROACT_ALL_FORMS\      <- the data (from Google Drive) — git-ignored
+├── data\                  <- ALL data, in ONE place — git-ignored
+│   └── PROACT_ALL_FORMS\  <- (more datasets go here too, never copied)
 └── projects\              <- your analyses, one subfolder each — git-ignored
     └── fvc-slope\
         ├── scripts\
         └── outputs\
 ```
 
-- **Data:** download the PRO-ACT data and put it in `PROACT_ALL_FORMS/` inside your
-  ALS folder.
+- **Data:** keep **all data in one place — the `data/` folder**. Download the PRO-ACT
+  data and unzip it to `data/PROACT_ALL_FORMS/`. Every analysis reads from here, so the
+  data is never copied into individual projects.
 
-  > **📁 [Download PRO-ACT data from Google Drive](DRIVE_LINK_HERE)**
+  > **📁 [Download PRO-ACT data from Google Drive](https://drive.google.com/file/d/1vhxfZ0EalFs1proJCqi8yepiUVn_2BRm/view?usp=sharing)**
 
 - **Your work:** make a new subfolder under `projects/` for each analysis.
 
@@ -53,9 +55,9 @@ ALS\                       <- this folder is the downloaded repo; put it anywher
 
 1. **One ALS folder.** Put it anywhere, but everything lives inside it.
 2. **It IS the repo** — never move or rename `CLAUDE.md` or `.claude/`.
-3. **Data goes in `PROACT_ALL_FORMS/`**; every analysis goes in a `projects/` subfolder.
-4. **Never commit patient data.** `PROACT_ALL_FORMS/` and `projects/` are git-ignored
-   for you.
+3. **All data lives in `data/`** — one shared copy, never duplicated per project. Every
+   analysis goes in a `projects/` subfolder and reads from `data/`.
+4. **Never commit patient data.** `data/` and `projects/` are git-ignored for you.
 
 ## Using it — the golden rule
 
@@ -63,7 +65,7 @@ ALS\                       <- this folder is the downloaded repo; put it anywher
 the top of that folder, opening it (or any project inside it) loads everything
 automatically. Then just tell Claude which project and where the data is:
 
-> "Let's work in `projects\fvc-slope`. The data is in `PROACT_ALL_FORMS`. Show how
+> "Let's work in `projects\fvc-slope`. The data is in `data\PROACT_ALL_FORMS`. Show how
 > ALSFRS-R declines over time for bulbar vs limb onset, save the figures, and write it
 > up as a polished PDF."
 
@@ -75,8 +77,8 @@ environments yourself: Claude Code sets those up and runs them for you.
 
 When the maintainer updates the rules or skills, get the latest by re-downloading the
 ZIP (same link above), or — if you cloned with GitHub Desktop — click **Fetch origin**
-then **Pull**. Your `PROACT_ALL_FORMS/` and `projects/` folders are git-ignored, so
-updates never touch your data or your work.
+then **Pull**. Your `data/` and `projects/` folders are git-ignored, so updates never
+touch your data or your work.
 
 ## What's in here
 
