@@ -53,8 +53,14 @@ is the core you'll use most.
 - **literature-review** — systematic reviews.
 - **database-lookup** — query public biomedical databases.
 
-## Not in v1
+## The rest of the collection
 
-Drug-discovery / chemistry / materials, lab-platform integrations (Benchling,
-DNAnexus, etc.), and specialty domains (quantum, geospatial, finance) are left out of
-the starter repo. Add individual skills only when a specific project needs them.
+This repo also includes the **full K-Dense scientific-skills collection** (131 skills
+total, MIT-licensed) — drug-discovery / chemistry / materials, genomics, imaging,
+lab-platform integrations (Benchling, DNAnexus, etc.), and specialty domains (quantum,
+geospatial, finance). The ⭐ set above is what an ALS/clinical team reaches for most;
+the rest activate automatically if a task calls for them. Browse the folders in
+`.claude/skills/` to see everything available.
+
+The four Anthropic-proprietary skills (**pdf**, **docx**, **xlsx**, **pptx**) are
+intentionally *not* here — they ship built into Claude. See `THIRD_PARTY_LICENSES.md`.
