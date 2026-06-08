@@ -1,0 +1,15 @@
+{
+  "_comment": "Team settings. The SessionStart hook keeps each researcher's CLAUDE.md and skills current by pulling the latest config every time they open Claude Code. It is fast-forward-only and quiet, and a SessionStart hook can never block the session. Requires this folder to be a git clone (the recommended setup); for ZIP downloads it simply does nothing.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git pull --ff-only --quiet"
+          }
+        ]
+      }
+    ]
+  }
+}
