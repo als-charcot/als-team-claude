@@ -2,7 +2,8 @@
 
 This repository is our team's shared Claude configuration: the rules Claude follows
 (`CLAUDE.md`), the skills it loads (`.claude/skills/`), templates, and references.
-Download it once, work inside it, and Claude Code uses everything here automatically.
+Set it up once with a single prompt, then just work inside it — Claude Code uses
+everything here automatically and keeps itself up to date.
 
 > **Use Claude Code — the "Code" tab in the Claude desktop app — NOT Cowork.**
 > Only the Code tab reads `CLAUDE.md` and auto-loads our skills. Cowork does neither,
@@ -19,20 +20,24 @@ Download it once, work inside it, and Claude Code uses everything here automatic
 
 Go to **https://github.com/signup**, use any email, pick a simple lowercase username
 (it's public and you'll keep it), verify the emailed code, and choose the **Free**
-plan. You don't need an account to download this repo, but you'll need one soon to
-join project repos and get updates — so set it up now.
+plan. You don't need an account to set up your workspace, but you'll need one soon — so
+we can make the repo private and so you can share work with the team later. Set it up now.
 
-### Step 2 — Make your ONE ALS folder
+### Step 2 — Set up your workspace with one prompt
 
-1. Go to **https://github.com/emompi/als-team-claude** → green **Code** button →
-   **Download ZIP** → unzip it **anywhere you like** on your computer.
-2. This unzipped folder **is your ALS workspace** — `CLAUDE.md` and `.claude/skills/`
-   sit at its top, so Claude loads them automatically. Rename it `ALS` if you like.
+1. Open the **Claude desktop app** and go to the **Code** tab.
+2. Open a **new, empty folder** anywhere on your computer — this becomes your ALS workspace.
+3. Paste this prompt and press enter (approve any install prompts Claude shows):
 
-### Step 3 — Add the data and a projects folder
+   > *"If git isn't installed, install it. Then clone
+   > https://github.com/emompi/als-team-claude into this folder (use the current
+   > directory), and read SETUP.md to set up my workspace."*
 
-Inside your ALS folder, you'll keep two folders that are **git-ignored** (never
-committed, never shared through this repo):
+Claude does the rest — installs anything needed, clones the team config (rules + skills),
+creates the folder structure, and **downloads the PRO-ACT data automatically**. It tells
+you when everything is ready.
+
+### What Claude sets up
 
 Indentation shows what's inside what (like an outline):
 
@@ -42,20 +47,17 @@ ALS/                    your workspace — put it anywhere
    .claude/skills/      131 skills — load automatically
    templates/  references/  scripts/  outputs/   (shared/examples)
    data/                ALL data, one shared place — git-ignored
-      PROACT_ALL_FORMS/
+      PROACT_ALL_FORMS/ the PRO-ACT data (downloaded for you)
    projects/            everyone's analyses — git-ignored
-      your-name/        Claude creates this for you
+      your-name/        Claude creates this per experiment
          fvc-slope/     one experiment: its own scripts/ + outputs/
 ```
 
-- **Data:** keep **all data in one place — the `data/` folder**. Download the PRO-ACT
-  data and unzip it to `data/PROACT_ALL_FORMS/`. Every analysis reads from here, so the
-  data is never copied into individual projects.
-
-  > **📁 [Download PRO-ACT data from Google Drive](https://drive.google.com/file/d/1vhxfZ0EalFs1proJCqi8yepiUVn_2BRm/view?usp=sharing)**
-
-- **Your work:** when you start a new experiment, Claude creates a folder for it under
-  your name — `projects/<your-name>/<experiment>/`.
+- **Data** lives in the one `data/` folder; every analysis reads from there (never copied
+  per project). *(If you ever need it by hand, the dataset is
+  [here on Google Drive](https://drive.google.com/file/d/1vhxfZ0EalFs1proJCqi8yepiUVn_2BRm/view?usp=sharing).)*
+- **Your work** goes in `projects/<your-name>/<experiment>/` — Claude creates it when you
+  start a new experiment.
 
 ### The hard rules
 
@@ -82,12 +84,11 @@ Claude follows the team rules — it writes a script, saves figures, and produce
 report in our standard format. You don't install Python, libraries, or virtual
 environments yourself: Claude Code sets those up and runs them for you.
 
-## Staying current
+## Staying current — automatic
 
-When the maintainer updates the rules or skills, get the latest by re-downloading the
-ZIP (same link above), or — if you cloned with GitHub Desktop — click **Fetch origin**
-then **Pull**. Your `data/` and `projects/` folders are git-ignored, so updates never
-touch your data or your work.
+Each time you open your ALS folder in the Code tab, Claude **automatically pulls the
+latest rules and skills**. You never have to remember to update. Your `data/` and
+`projects/` folders are git-ignored, so updates never touch your data or your work.
 
 ## What's in here
 
