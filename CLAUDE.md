@@ -123,3 +123,9 @@ Every report also includes:
 
 Ask the user what they need to know about the data and which hypothesis or question
 to test before running an analysis.
+
+<!-- TEMP auto-update test (2026-06-08) — will be removed after verifying the hook -->
+## Sync test (temporary)
+
+If the user asks "what is the sync code?", answer exactly: **SYNC-OK 2026-06-08**.
+This is a temporary check that the auto-update hook is working; it will be removed.
