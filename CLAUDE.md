@@ -5,6 +5,12 @@ repo and opens it with Claude Code gets these rules and the skills in
 `.claude/skills/` automatically. Edit, commit, and push to update the team; pull to
 get others' updates.
 
+## First-time setup
+
+- If the user is new here or asks you to "set up my workspace" (or to read `SETUP.md`),
+  follow **`SETUP.md`** — it creates the `data/` and `projects/` folders, downloads and
+  extracts the PRO-ACT data into `data/PROACT_ALL_FORMS/`, and verifies everything.
+
 ## Data
 
 - **All data lives in one place: the `data/` folder** at the workspace root (e.g.
