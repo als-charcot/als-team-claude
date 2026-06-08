@@ -27,9 +27,12 @@ get others' updates.
 
 - The deliverable is **never the chat output**. It is **saved files**: a script,
   saved figures, and a PDF report.
+- Each researcher's work lives under **`projects/<your-name>/`**. When the user starts a
+  new experiment, create `projects/<name>/<experiment>/` (with `scripts/` and `outputs/`
+  inside) and work there. **If you don't know the researcher's name yet, ask once.**
 - For any analysis, **write a complete Python script or Jupyter notebook that runs
-  end-to-end** and save it to `scripts/`. Do not compute results only inline.
-- Save figures and reports to `outputs/`.
+  end-to-end** and save it in that experiment's `scripts/`. Do not compute inline only.
+- Save figures and the PDF report to that experiment's `outputs/`.
 - When asked for analysis results, **produce a report in the `polished-pdf-reports`
   format** (see that skill in `.claude/skills/`).
 - Before starting an analysis: **list the columns of the relevant CSV first** —
@@ -84,10 +87,14 @@ Every report also includes:
 
 ## Output locations
 
-- `scripts/` — analysis scripts and notebooks (the reproducible record)
-- `outputs/` — figures and PDF reports
-- `templates/` — report and hypothesis-log templates
-- `references/` — shared reference docs (methodology pitfalls, etc.)
+- **`projects/<name>/<experiment>/`** — where each researcher's work goes: an experiment
+  folder under that person's name, with its own `scripts/` and `outputs/`. Create it when
+  a new experiment starts. (`projects/` is git-ignored — personal work stays local until a
+  project is deliberately shared as its own repo.)
+- `data/` — all datasets; read-only for analyses (never copy data out of it).
+- repo-root `scripts/` and `outputs/` — shared/example material only, not personal work.
+- `templates/` — report and hypothesis-log templates.
+- `references/` — shared reference docs (methodology pitfalls, etc.).
 
 ## Skills
 

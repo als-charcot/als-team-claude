@@ -34,17 +34,18 @@ join project repos and get updates — so set it up now.
 Inside your ALS folder, you'll keep two folders that are **git-ignored** (never
 committed, never shared through this repo):
 
+Indentation shows what's inside what (like an outline):
+
 ```
-ALS/                       <- this folder is the downloaded repo; put it anywhere
-├── CLAUDE.md              <- team rules        (auto-loaded)
-├── .claude/skills/        <- team skills       (auto-loaded)
-├── templates/  references/  scripts/  outputs/
-├── data/                  <- ALL data, in ONE place — git-ignored
-│   └── PROACT_ALL_FORMS/  <- (more datasets go here too, never copied)
-└── projects/              <- your analyses, one subfolder each — git-ignored
-    └── fvc-slope/
-        ├── scripts/
-        └── outputs/
+ALS/                    your workspace — put it anywhere
+   CLAUDE.md            team rules — load automatically
+   .claude/skills/      131 skills — load automatically
+   templates/  references/  scripts/  outputs/   (shared/examples)
+   data/                ALL data, one shared place — git-ignored
+      PROACT_ALL_FORMS/
+   projects/            everyone's analyses — git-ignored
+      your-name/        Claude creates this for you
+         fvc-slope/     one experiment: its own scripts/ + outputs/
 ```
 
 - **Data:** keep **all data in one place — the `data/` folder**. Download the PRO-ACT
@@ -53,15 +54,17 @@ ALS/                       <- this folder is the downloaded repo; put it anywher
 
   > **📁 [Download PRO-ACT data from Google Drive](https://drive.google.com/file/d/1vhxfZ0EalFs1proJCqi8yepiUVn_2BRm/view?usp=sharing)**
 
-- **Your work:** make a new subfolder under `projects/` for each analysis.
+- **Your work:** when you start a new experiment, Claude creates a folder for it under
+  your name — `projects/<your-name>/<experiment>/`.
 
 ### The hard rules
 
 1. **One ALS folder.** Put it anywhere, but everything lives inside it.
 2. **It IS the repo** — never move or rename `CLAUDE.md` or `.claude/`.
-3. **All data lives in `data/`** — one shared copy, never duplicated per project. Every
-   analysis goes in a `projects/` subfolder and reads from `data/`.
-4. **Never commit patient data.** `data/` and `projects/` are git-ignored for you.
+3. **All data lives in `data/`** — one shared copy, never duplicated per project.
+4. **Your analyses go in `projects/<your-name>/<experiment>/`** (Claude creates it) and
+   read from `data/`.
+5. **Never commit patient data.** `data/` and `projects/` are git-ignored for you.
 
 ## Using it — the golden rule
 
@@ -69,9 +72,11 @@ ALS/                       <- this folder is the downloaded repo; put it anywher
 the top of that folder, opening it (or any project inside it) loads everything
 automatically. Then just tell Claude which project and where the data is:
 
-> "Let's work in `projects/fvc-slope`. The data is in `data/PROACT_ALL_FORMS`. Show how
-> ALSFRS-R declines over time for bulbar vs limb onset, save the figures, and write it
+> "Start a new experiment called `fvc-slope`. The data is in `data/PROACT_ALL_FORMS`. Show
+> how ALSFRS-R declines over time for bulbar vs limb onset, save the figures, and write it
 > up as a polished PDF."
+
+(Claude will create `projects/<your-name>/fvc-slope/` and work there.)
 
 Claude follows the team rules — it writes a script, saves figures, and produces a
 report in our standard format. You don't install Python, libraries, or virtual

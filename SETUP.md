@@ -63,8 +63,9 @@ same folders on either OS.
 
 ## 6. Confirm and hand off
 - Confirm the `CLAUDE.md` rules and skills are active.
-- Summarize in one short message: data is in `data/PROACT_ALL_FORMS/`, analyses go in
-  `projects/<name>/`, and suggest a starter prompt:
-  > "Work in `projects/fvc-slope`; the data is in `data/PROACT_ALL_FORMS`. Show how ALSFRS-R
-  > declines over time for bulbar vs limb onset, and whether baseline FVC predicts a faster
-  > decline. Save the figures and write it up as a polished PDF."
+- Summarize in one short message: data is in `data/PROACT_ALL_FORMS/`, and each experiment
+  goes in `projects/<their-name>/<experiment>/` (you create it; ask their name once if you
+  don't know it). Suggest a starter prompt:
+  > "Start a new experiment called `fvc-slope`; the data is in `data/PROACT_ALL_FORMS`. Show
+  > how ALSFRS-R declines over time for bulbar vs limb onset, and whether baseline FVC
+  > predicts a faster decline. Save the figures and write it up as a polished PDF."
