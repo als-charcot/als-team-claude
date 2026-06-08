@@ -4,11 +4,14 @@ This file is instructions for **Claude Code**. When a researcher opens this repo
 **Code tab** and asks you to "set up my workspace" (or "read SETUP.md and set me up"),
 follow these steps.
 
-**The researcher is not technical.** They should not have to install anything or run
-commands. **You do all the technical work** — installing tools, extracting archives,
-verifying — and only pause for a quick yes/no when you need their consent to install
-software. The *one* thing they do by hand is download the dataset (a single click in
-their browser); you place it for them.
+**The researcher is not technical.** They should not have to install anything, run
+commands, or download anything by hand. **You do all the technical work** — installing
+tools, downloading and extracting the data, verifying — and only pause for a quick yes/no
+when you need consent to install software.
+
+**Tell the user what you're doing as you go.** Before each step, say plainly what you're
+about to do ("I'll create your folders, then download the data...") and confirm when it's
+done. Don't silently create or change things — they should be able to follow along.
 
 **First, detect the operating system (Windows or macOS) and use the matching commands
 below.** Paths here use forward slashes (`data/PROACT_ALL_FORMS/`) — they refer to the
@@ -30,24 +33,24 @@ same folders on either OS.
 ## 2. Create the standard folders (idempotent — never overwrite)
 - Ensure `data/` and `projects/` exist at the repo root; create them only if missing.
 
-## 3. Get the PRO-ACT data into `data/PROACT_ALL_FORMS/`  (they download; YOU place it)
+## 3. Download the PRO-ACT data into `data/PROACT_ALL_FORMS/`  (you do this automatically)
 - **If `data/PROACT_ALL_FORMS/` already contains `F_PROACT_*.csv` files, skip this step.**
-- Otherwise:
-  1. Ask the researcher to download the dataset zip — one click:
-     `https://drive.google.com/file/d/1vhxfZ0EalFs1proJCqi8yepiUVn_2BRm/view`
-  2. Find the downloaded zip yourself (check this ALS folder and the user's `Downloads`
-     folder; if you can't find it, ask them for the path).
-  3. **Extract it yourself — no Python needed.** Use the OS's built-in tool:
-     - **Windows (PowerShell):** `Expand-Archive -Path "<zip>" -DestinationPath "data/_extract" -Force`
-     - **macOS:** `unzip "<zip>" -d data/_extract`  (or `ditto -x -k "<zip>" data/_extract`)
-  4. The archive contains a **dated wrapper folder** (e.g. `2026_02_27_PROACT_ALL_FORMS/`)
-     holding the CSVs. Move that folder's **contents** into `data/PROACT_ALL_FORMS/` so the
-     `F_PROACT_*.csv` files sit directly inside it (flatten the wrapper). Remove the temp
-     folder and the zip.
-  - *Optional shortcut (only if Python is already available, or you install it yourself with
-    consent — never make the researcher do it):* `pip install gdown` then
-    `gdown "https://drive.google.com/uc?id=1vhxfZ0EalFs1proJCqi8yepiUVn_2BRm" -O data/proact.zip`.
-- **Verify:** list `data/PROACT_ALL_FORMS/` and confirm ~18 `F_PROACT_*.csv` files.
+- Otherwise **download it yourself — do NOT ask the researcher to download or to go find a
+  file.** Tell them you're downloading the dataset (~25 MB), then:
+  1. Make sure Python is available; install it if missing, with consent (Windows:
+     `winget install --id Python.Python.3.12 -e`; macOS: `brew install python` or python.org).
+  2. Install gdown: `pip install gdown`.
+  3. Download the dataset zip (Google Drive file id `1vhxfZ0EalFs1proJCqi8yepiUVn_2BRm`):
+     `gdown "https://drive.google.com/uc?id=1vhxfZ0EalFs1proJCqi8yepiUVn_2BRm" -O data/proact.zip`
+  4. Extract it (Windows: `Expand-Archive -Path data/proact.zip -DestinationPath data/_extract -Force`;
+     macOS: `unzip data/proact.zip -d data/_extract`). The archive has a **dated wrapper
+     folder** (e.g. `2026_02_27_PROACT_ALL_FORMS/`) holding the CSVs — move its **contents**
+     into `data/PROACT_ALL_FORMS/` (flatten the wrapper). Delete the zip and the temp folder.
+  - **Only if the automatic download genuinely fails** (no network, Drive change): then, as a
+    fallback, give the researcher the link and ask them to download + unzip it into
+    `data/PROACT_ALL_FORMS/`: `https://drive.google.com/file/d/1vhxfZ0EalFs1proJCqi8yepiUVn_2BRm/view`
+- **Verify:** list `data/PROACT_ALL_FORMS/` and confirm ~18 `F_PROACT_*.csv` files, then tell
+  the user the data is ready.
 
 ## 4. Sanity check
 - Read `data/PROACT_ALL_FORMS/F_PROACT_ALSFRS.csv` and report its row count and a few
