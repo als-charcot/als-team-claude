@@ -6,11 +6,27 @@ Clone it once, and Claude Code uses everything here automatically.
 
 ## One-time setup (no coding required)
 
-1. **Install GitHub Desktop** — a free app with buttons instead of commands:
-   https://desktop.github.com
-2. **Clone this repo** — in GitHub Desktop: File → Clone Repository → pick this repo
-   → choose where to save it on your computer.
-3. That's it. The folder on your computer now has everything.
+### Step 1 — Get the PRO-ACT data
+
+Download the shared data folder and save it somewhere on your computer (e.g. your
+Documents folder). It contains all the PROACT CSV files the analyses need.
+
+> **📁 [Download PRO-ACT data from Google Drive](DRIVE_LINK_HERE)**
+
+Once downloaded, note the path to that folder — you'll point Claude at it when running
+analyses (e.g. `C:\Users\yourname\Documents\PROACT_ALL_FORMS`).
+
+### Step 2 — Clone this repo
+
+1. Go to **https://github.com/emompi/als-team-claude** in your browser.
+2. Click the green **Code** button → **Download ZIP** → unzip it anywhere you like.
+   (Or if you use GitHub Desktop: File → Clone Repository → URL → paste the link above.)
+
+### Step 3 — Open with Claude
+
+Open the unzipped folder in the **Claude desktop app** (Code tab) or run `claude`
+inside it from a terminal. That's it — Claude reads `CLAUDE.md` and loads all the
+skills automatically.
 
 ## Using it
 
@@ -27,9 +43,9 @@ Clone it once, and Claude Code uses everything here automatically.
 
 ## Staying current
 
-When someone updates the rules or adds a skill, get it by clicking **Fetch origin**
-(then **Pull**) in GitHub Desktop. Do this every so often, or whenever told there's
-an update.
+When the maintainer updates the rules or adds a skill, get the latest by re-downloading
+the ZIP (same link above), or — if you cloned with GitHub Desktop — click
+**Fetch origin** then **Pull**.
 
 ## Contributing back
 
