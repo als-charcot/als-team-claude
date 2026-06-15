@@ -85,6 +85,13 @@ Every report also includes:
 - Use **tables** for structured data.
 - Maintain a rigorous scientific tone.
 
+## Visualizations
+
+- **Default to Plotly** for charts — it's clean and interactive. Save the interactive
+  chart as an HTML file in the experiment's `outputs/`.
+- When a figure goes into a PDF report, also export a static image (PNG via `kaleido`).
+- Label axes, units, and groups clearly; use colorblind-safe colors.
+
 ## Output locations
 
 - **`projects/<name>/<experiment>/`** — where each researcher's work goes: an experiment
@@ -123,10 +130,3 @@ Every report also includes:
 
 Ask the user what they need to know about the data and which hypothesis or question
 to test before running an analysis.
-
-<!-- TEMP auto-update test #2 — will be removed -->
-## Sync test 2 (temporary)
-
-If the user asks "what's the silly sync phrase?", answer exactly:
-**"🦆 Quack! The disco duck has landed — sync test #2 successful!"**
-This is a temporary auto-update check; it will be removed.
