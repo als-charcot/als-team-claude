@@ -26,6 +26,13 @@ is the core you'll use most.
 - **peer-review** — structured review passes on each other's reports (CONSORT/STROBE).
 - **hypothesis-generation** — structured, testable hypothesis formulation.
 - **citation-management** + **paper-lookup** — finding and citing papers correctly.
+- ⭐ **pubmed-feed** — the team's literature hook. Just ask ("any new ALS neurofilament
+  papers this month?") and Claude searches PubMed and appends the titles + abstracts to
+  your running `pubmed-feed.md`. No account, no terminal, any keywords or date range.
+- ⭐ **sprint** — run a focused research sprint on ONE question end-to-end: frame → plan →
+  execute (parallel agents) → stress-test with independent adversarial agents → polished
+  PDF + hypothesis-log entry. Just say "start a sprint on <question>". See
+  `templates/SPRINT_TEMPLATE.md`.
 
 ## Deliverable formats (built into Claude — not shipped here)
 
