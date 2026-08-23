@@ -30,7 +30,7 @@ we can make the repo private and so you can share work with the team later. Set 
 3. Paste this prompt and press enter (approve any install prompts Claude shows):
 
    > *"If git isn't installed, install it. Then clone
-   > https://github.com/emompi/als-team-claude into this folder (use the current
+   > https://github.com/als-charcot/als-team-claude into this folder (use the current
    > directory), and read SETUP.md to set up my workspace."*
 
 Claude does the rest — installs anything needed, clones the team config (rules + skills),
