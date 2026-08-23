@@ -33,6 +33,13 @@ is the core you'll use most.
   execute (parallel agents) → stress-test with independent adversarial agents → polished
   PDF + hypothesis-log entry. Just say "start a sprint on <question>". See
   `templates/SPRINT_TEMPLATE.md`.
+- ⭐ **share-work** — how your finished work reaches the team. Say "share this work with the
+  team" and Claude promotes the deliverable into `findings/<you>/<slug>/`, appends your
+  `HYPOTHESIS_LOG.md` entry, and pushes to your own branch. Never touches `main`/`develop`,
+  never commits data.
+- ⭐ **team-sync** — say "pull the latest from the team repo" (or "what's new from the
+  team?") and Claude brings down everyone's shared rules, skills and findings, then
+  summarises what changed.
 
 ## Deliverable formats (built into Claude — not shipped here)
 

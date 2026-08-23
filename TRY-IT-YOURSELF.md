@@ -37,9 +37,12 @@ independent adversarial agents → **write up** a polished PDF + a hypothesis-lo
 
 ## Good to know
 
-- **Your work stays local.** `projects/` and `data/` are git-ignored — you don't push your
-  experiment. Share a result deliberately by pasting the commit link into the hypothesis log.
-- **What everyone shares is the *skills*, not the experiments** — those come from this repo.
+- **Your work stays local by default.** `projects/` and `data/` are git-ignored — your
+  scratch work and the data never leave your machine.
+- **Sharing is deliberate.** When a piece is finished, say *"share this work with the
+  team."* Claude promotes just the deliverable (report PDF, the script, key figures, a short
+  README) into `findings/<your-name>/<slug>/`, appends your `HYPOTHESIS_LOG.md` entry, and
+  pushes it to your own branch `researchers/<your-name>`. Nothing else is shared.
 - **Guardrail:** agents can be *confidently wrong*. Keep effect sizes (not just p-values), and
   make every claim trace back to a real number or `subject_id`. Use agents to *attack* your
   ideas, not just confirm them.

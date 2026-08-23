@@ -19,7 +19,7 @@ throughout (effect sizes with p-values, hedge mechanism claims, save files not c
 - Restate the request as a **testable hypothesis**. Agree **success criteria**: what result
   would actually answer it, the effect size that would matter, and the expected n.
 - Confirm the data and which forms/columns (list columns first; never assume).
-- Set up the workspace: a branch `analysis/<name>/<slug>` and `projects/<name>/<slug>/`.
+- Set up the workspace: work in `projects/<name>/<slug>/` on their own branch `researchers/<name>`.
 - Copy `templates/SPRINT_TEMPLATE.md` into the project folder and fill in the top.
 
 ## Stage 2 — Plan (use plan mode)
@@ -37,12 +37,15 @@ throughout (effect sizes with p-values, hedge mechanism claims, save files not c
   design, no confounder adjustment, survivorship / healthy-user bias, multiple testing,
   observational→causal overreach). Keep only what survives.
 
-## Stage 5 — Write up, log, and share
+## Stage 5 — Write up, then offer to share
 - Produce the report with the **polished-pdf-reports** skill (the team's 6-part per-finding
-  structure). Save it to `outputs/`.
-- Append a **hypothesis-log entry** (`templates/HYPOTHESIS_LOG_TEMPLATE.md`): status,
-  finding with effect size + n, evidence / commit link, open questions.
+  structure). Save it to that experiment's own `outputs/` — which is **private**
+  (`projects/` is git-ignored).
 - Summarize for the user: what we asked, what we found, how confident, and what's next.
+- Then **offer to share it**: if they agree, hand off to the **share-work** skill, which
+  promotes the deliverable into `findings/<name>/<slug>/`, appends the entry to
+  `HYPOTHESIS_LOG.md` at the repo root, and pushes to their own branch
+  `researchers/<name>`. Nothing is shared unless they say so.
 
 ## Notes
 - **One question per sprint.** If scope creeps, spin the extra question into its own sprint.
