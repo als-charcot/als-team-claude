@@ -1,12 +1,12 @@
 {
-  "_comment": "Team settings. The SessionStart hook keeps each researcher's CLAUDE.md and skills current by pulling the latest config every time they open Claude Code. It is fast-forward-only and quiet, and a SessionStart hook can never block the session. Requires this folder to be a git clone (the recommended setup); for ZIP downloads it simply does nothing.",
+  "_comment": "Team settings. The SessionStart hook keeps each researcher's CLAUDE.md, skills and shared findings current. Researchers work on their own branch (researchers/<name>), but shared updates land on main -- so a plain 'git pull' would pull only their own branch and they would silently drift. This fetches and merges origin/main into whatever branch they are on. If the merge cannot be done cleanly it aborts, leaving the working tree untouched rather than dropping conflict markers in front of a non-coder; the team-sync skill then resolves it with Claude watching. Requires this folder to be a git clone; for ZIP downloads the fetch fails and nothing happens.",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "git pull --ff-only --quiet"
+            "command": "git fetch origin --quiet && (git merge --no-edit --quiet origin/main || git merge --abort) ; true"
           }
         ]
       }

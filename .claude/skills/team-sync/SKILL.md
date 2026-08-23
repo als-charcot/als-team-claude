@@ -16,13 +16,25 @@ plain language.
 
 ## Pull the latest
 
+**Important:** researchers work on their own branch (`researchers/<name>`), but shared
+updates — new skills, rule changes, colleagues' findings — land on **`main`**. So a plain
+`git pull` pulls only their own branch and silently gets nothing. Always sync **from
+`origin/main`**, whatever branch they are on.
+
 1. Check for uncommitted local changes first. `data/` and `projects/` are git-ignored so
    they're never at risk — but if a *tracked* file has local edits, say so and ask before
    proceeding rather than discarding anything.
-2. Fetch and update: pull `main` (the trusted shared copy) and, if the maintainer has asked
-   the team to track it, `develop`. Never force anything; never discard their work.
-3. If git reports a conflict or anything unexpected, **stop and explain it in plain
-   language**, then suggest they ask the maintainer. Do not click through it.
+2. `git fetch origin`, then merge `origin/main` into their current branch:
+   `git merge --no-edit origin/main`. Never rebase, never force, never discard their work.
+   (A SessionStart hook already attempts this on every launch; running it again is safe and
+   is how they catch up if that attempt had to back out.)
+3. **If the merge conflicts**, do not leave conflict markers sitting in their tree:
+   - `HYPOTHESIS_LOG.md` should resolve itself (`.gitattributes` sets `merge=union`).
+   - For anything else, explain in plain language what disagrees. Their own work in
+     `findings/<name>/` will essentially never conflict; a conflict in a shared file means
+     they edited something they weren't expected to. Offer to keep the team's version, and
+     if they're unsure, `git merge --abort` and tell them to ask the maintainer.
+4. Confirm what happened: how many commits came down, or "already up to date."
 
 ## Then summarise what's new
 

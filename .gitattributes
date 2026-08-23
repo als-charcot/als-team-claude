@@ -1,0 +1,3 @@
+# The hypothesis log is append-only: every researcher adds entries at the end, and main
+# gains entries too. A normal merge would conflict on that. "union" keeps both sides.
+HYPOTHESIS_LOG.md merge=union
