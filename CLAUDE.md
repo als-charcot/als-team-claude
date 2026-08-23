@@ -8,8 +8,9 @@ get others' updates.
 ## First-time setup
 
 - If the user is new here or asks you to "set up my workspace" (or to read `SETUP.md`),
-  follow **`SETUP.md`** — it creates the `data/` and `projects/` folders, downloads and
-  extracts the PRO-ACT data into `data/PROACT_ALL_FORMS/`, and verifies everything.
+  follow **`SETUP.md`** — it creates the `data/` and `projects/` folders, checks out their own
+  branch `researchers/<name>`, downloads and extracts the PRO-ACT data into
+  `data/PROACT_ALL_FORMS/`, and verifies everything.
 
 ## Data
 
@@ -92,12 +93,64 @@ Every report also includes:
 - When a figure goes into a PDF report, also export a static image (PNG via `kaleido`).
 - Label axes, units, and groups clearly; use colorblind-safe colors.
 
+## Collaboration & branches (how work gets shared)
+
+- Each researcher has **one durable branch: `researchers/<name>`**. All their pushes go
+  there. **`main` and `develop` are protected — never push to them**, and never push to
+  another person's branch. The maintainer merges work upward into `develop`.
+- **We do not use pull requests.** The commit history on each person's branch is the record.
+- Personal work is **private by default** (`projects/`, `data/` are git-ignored). It becomes
+  shared only by **promotion**: use the **share-work** skill to copy the finished
+  deliverable into `findings/<name>/<slug>/`, append a `HYPOTHESIS_LOG.md` entry, and push
+  to their branch. Never promote raw data or very large files (> ~10 MB).
+- To get others' work, use the **team-sync** skill ("pull the latest from the team repo").
+
+### The promotion protocol (exactly what gets copied)
+
+Promoted into `findings/<name>/<slug>/` — **these and nothing else**:
+
+- `report.pdf` — the polished report
+- the end-to-end script that produced it (e.g. `analysis.py`)
+- key figures as `.png`
+- `README.md` — the question, the finding **with effect size and n**, the caveats, and how
+  to re-run it
+- plus **one appended entry** in `HYPOTHESIS_LOG.md` (repo root)
+
+**Never promoted** — it stays in `projects/` / `data/`:
+
+- any raw or derived **patient data** — never, under any circumstances, even de-identified
+- scratch scripts, dead ends, half-finished work
+- virtual environments, `__pycache__`, caches
+- files over ~10 MB (e.g. large interactive Plotly HTML) — keep them local and share the
+  PDF plus a static PNG instead
+
+If you are asked to promote something on the second list, **refuse and say why in plain
+language**, then offer the allowed alternative (e.g. the PDF plus a static PNG).
+
+### Hard rules for you (Claude)
+
+- **Never push to `main` or `develop`.** They are protected and belong to the maintainer.
+- **Never commit anything from `data/`** — no patient data leaves the machine, ever.
+- **Push only to `researchers/<name>`**, the current researcher's own branch — never
+  anyone else's.
+
+### Casual wording maps to the right action
+
+Researchers won't use git vocabulary. "Save this", "send it up", "back this up", "publish
+this" mean *promote, commit and push* — use **share-work**. "Get the latest", "what's new",
+"catch me up" mean *pull* — use **team-sync**. Work out which one they mean rather than
+asking for exact terminology, then say in one plain sentence what you're about to do and
+confirm it with them before acting.
+
 ## Output locations
 
 - **`projects/<name>/<experiment>/`** — where each researcher's work goes: an experiment
   folder under that person's name, with its own `scripts/` and `outputs/`. Create it when
-  a new experiment starts. (`projects/` is git-ignored — personal work stays local until a
-  project is deliberately shared as its own repo.)
+  a new experiment starts. (`projects/` is git-ignored — personal work stays local and
+  private until it is deliberately promoted into `findings/`.)
+- **`findings/<name>/<slug>/`** — tracked. The finished, shared deliverable only (report
+  PDF, the script, key figures, a short README). See `findings/README.md`.
+- **`HYPOTHESIS_LOG.md`** (repo root) — tracked. The index of all shared findings.
 - `data/` — all datasets; read-only for analyses (never copy data out of it).
 - repo-root `scripts/` and `outputs/` — shared/example material only, not personal work.
 - `templates/` — report and hypothesis-log templates.

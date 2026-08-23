@@ -44,20 +44,36 @@ Indentation shows what's inside what (like an outline):
 ```
 ALS/                    your workspace — put it anywhere
    CLAUDE.md            team rules — load automatically
-   .claude/skills/      131 skills — load automatically
+   .claude/skills/      135 skills — load automatically
+   findings/            SHARED: everyone's finished work
+      their-name/       one folder per researcher, per finding
+   HYPOTHESIS_LOG.md    SHARED: the index of all findings
    templates/  references/  scripts/  outputs/   (shared/examples)
    data/                ALL data, one shared place — git-ignored
       PROACT_ALL_FORMS/ the PRO-ACT data (downloaded for you)
-   projects/            everyone's analyses — git-ignored
+   projects/            PRIVATE: your analyses — git-ignored
       your-name/        Claude creates this per experiment
          fvc-slope/     one experiment: its own scripts/ + outputs/
 ```
 
 - **Data** lives in the one `data/` folder; every analysis reads from there (never copied
-  per project). *(If you ever need it by hand, the dataset is
-  [here on Google Drive](https://drive.google.com/file/d/1vhxfZ0EalFs1proJCqi8yepiUVn_2BRm/view?usp=sharing).)*
+  per project). The dataset is distributed separately — ask the maintainer for the link.
 - **Your work** goes in `projects/<your-name>/<experiment>/` — Claude creates it when you
-  start a new experiment.
+  start a new experiment. It is **private to your machine**.
+
+### Branches — you have your own
+
+You work on **one durable branch: `researchers/<your-name>`**, and you push only there.
+`main` and `develop` are protected — you never push to them; the maintainer merges work
+upward when the team should build on it. **We don't use pull requests.**
+
+### Sharing your work — you promote it
+
+Nothing syncs by itself. When a piece is finished, say **"share this work with the team."**
+Claude copies just the deliverable (report PDF, the script, key figures, a short README)
+into `findings/<your-name>/<slug>/`, appends your entry to `HYPOTHESIS_LOG.md`, and pushes
+your branch. See [`findings/README.md`](findings/README.md) for exactly what is and isn't
+shared.
 
 ### The hard rules
 
@@ -67,6 +83,7 @@ ALS/                    your workspace — put it anywhere
 4. **Your analyses go in `projects/<your-name>/<experiment>/`** (Claude creates it) and
    read from `data/`.
 5. **Never commit patient data.** `data/` and `projects/` are git-ignored for you.
+6. **You push only to `researchers/<your-name>`** — never to `main` or `develop`.
 
 ## Using it — the golden rule
 
@@ -94,9 +111,21 @@ latest rules and skills**. You never have to remember to update. Your `data/` an
 
 - `CLAUDE.md` — the rules Claude follows for our work
 - `.claude/skills/` — the team's skills (see `INDEX.md` there)
-- `templates/` — report and hypothesis-log templates
+- `findings/` — **the team's shared, finished work**, one folder per researcher
+- `HYPOTHESIS_LOG.md` — **the index of every shared finding**
+- `templates/` — report, sprint and hypothesis-log templates
 - `references/` — shared reference docs (e.g., methodology pitfalls)
-- `scripts/`, `outputs/` — shared/example analysis scripts and outputs
+- `scripts/`, `outputs/` — shared/example material only, **not** personal work
+
+## The three things you'll ever need to say
+
+| When | Say this |
+|---|---|
+| Start of a session | *"Pull the latest from the team repo."* |
+| You have something worth keeping | *"Share this work with the team."* |
+| Catching up | *"What's new from the team since last week?"* |
+
+Say it however comes naturally — "get the latest", "save this", "send it up" all work.
 
 ## Data note
 

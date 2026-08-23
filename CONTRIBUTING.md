@@ -4,15 +4,19 @@ This repo is our shared Claude setup: the rules in `CLAUDE.md` and the skills in
 `.claude/skills/`. You don't need to be a coder to contribute — GitHub Desktop has
 buttons for everything below. When in doubt, ask the maintainer.
 
-## The basic loop (GitHub Desktop)
+## The basic loop — just ask Claude
 
-1. **Fetch origin → Pull** before you start, so you have everyone's latest work.
-2. Make your change (see below).
-3. **Commit** with a short message describing what you changed.
-4. **Push** so the team gets it.
+You don't need git commands or buttons. In the Code tab:
 
-If a Commit/Push ever shows a conflict or an error you don't understand, **stop and
-ask the maintainer** rather than clicking through it.
+1. **"Pull the latest from the team repo."** — start of a session.
+2. Do your work.
+3. **"Share this work with the team."** — when you have something worth keeping.
+4. **"What's new from the team since last week?"** — to catch up.
+
+(GitHub Desktop's **Fetch origin → Pull** does step 1 too, if you prefer buttons.)
+
+If git ever shows a conflict or an error you don't understand, **stop and ask the
+maintainer** rather than clicking through it. That's the whole safety rule.
 
 ## Proposing a change to the rules (`CLAUDE.md`)
 
@@ -37,15 +41,29 @@ A skill is a folder with a `SKILL.md` file at its root (optionally with `scripts
 The starter repo intentionally ships a curated set (see `INDEX.md`). Add a new skill
 when a real project needs it — not just in case.
 
-## Doing an analysis
+## Doing an analysis, and sharing it
 
-- Work on a branch named for the **hypothesis or question**, not for yourself —
-  e.g. `analysis/alice/h024-fvc-slope`. The branch is disposable; you are durable.
-- Exploratory / throwaway work can live in `scripts/<your-name>/scratch/`.
-- Follow `CLAUDE.md`: write an end-to-end script to `scripts/`, save figures and the
-  PDF to `outputs/`, and produce the report in the `polished-pdf-reports` format.
-- A **draft pull request** is welcome even for incomplete or negative results — they
-  save the next person from repeating the work.
+**You have one branch, and it's yours: `researchers/<your-name>`.** It is durable — it
+isn't deleted or rewritten. Its history is the record of your work.
+
+- `main` and `develop` are **protected**. You never push to them. The maintainer merges
+  work upward into `develop` when the team should build on it.
+- You never push to anyone else's branch, and nobody pushes to yours.
+- **We don't use pull requests.** You push to your own branch; that's it.
+
+Where the work lives:
+
+- **While you work:** `projects/<your-name>/<experiment>/` — with its own `scripts/` and
+  `outputs/`. This is **git-ignored**: private, on your machine only. Scratch, dead ends
+  and half-finished work all belong here.
+- **When it's finished:** say *"share this work with the team."* Claude promotes the
+  deliverable (report PDF, the script, key figures, a short README) into
+  `findings/<your-name>/<slug>/`, appends your `HYPOTHESIS_LOG.md` entry, commits it with
+  your name, and pushes your branch. See [`findings/README.md`](findings/README.md).
+- Repo-root `scripts/` and `outputs/` are **shared examples only** — not personal work.
+
+Negative and inconclusive results are worth sharing. A logged dead end saves the next
+person from repeating it.
 
 ## The hypothesis log
 

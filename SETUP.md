@@ -32,8 +32,23 @@ same folders on either OS.
 
 ## 2. Create the standard folders (idempotent — never overwrite)
 - Ensure `data/` and `projects/` exist at the repo root; create them only if missing.
+- `findings/` and `HYPOTHESIS_LOG.md` **already come with the repo and are tracked in git** —
+  do not create, replace or overwrite them. If either is somehow missing, say so and stop
+  rather than making a new one.
 
-## 3. Download the PRO-ACT data into `data/PROACT_ALL_FORMS/`  (you do this automatically)
+## 3. Their own branch: `researchers/<name>` (you do this, with git)
+- Ask their first name **once** if you don't know it yet (`git config user.name` may already
+  tell you); use the lowercase first name as the slug — e.g. "David Devos" → `david`.
+- Create the branch from `main` if it doesn't exist yet, otherwise just check it out:
+  `researchers/<name>`. Keep them on that branch.
+- Tell them in one plain sentence: *"This is your own branch — it's the only place your work
+  ever gets pushed, and `main`/`develop` stay untouched."*
+- Mention once that pushing needs them **signed in to GitHub on this machine** (GitHub
+  Desktop's "Continue with browser", or the Git Credential Manager sign-in prompt) — and
+  that if a push ever fails they should ask the maintainer (Emmanuel) rather than trying to
+  fix sign-in themselves.
+
+## 4. Download the PRO-ACT data into `data/PROACT_ALL_FORMS/`  (you do this automatically)
 - **If `data/PROACT_ALL_FORMS/` already contains `F_PROACT_*.csv` files, skip this step.**
 - Otherwise **download it yourself — do NOT ask the researcher to download or to go find a
   file.** Tell them you're downloading the dataset (~25 MB), then:
@@ -52,23 +67,26 @@ same folders on either OS.
 - **Verify:** list `data/PROACT_ALL_FORMS/` and confirm ~18 `F_PROACT_*.csv` files, then tell
   the user the data is ready.
 
-## 4. Sanity check
+## 5. Sanity check
 - Read `data/PROACT_ALL_FORMS/F_PROACT_ALSFRS.csv` and report its row count and a few
   column names so the researcher sees the data is readable. Read from `data/` — **never
   copy the data into a project folder.**
 
-## 5. Analyses & environments (your job, not theirs)
+## 6. Analyses & environments (your job, not theirs)
 - When an analysis needs Python or libraries, install and manage them **yourself**: create
   a virtual environment inside that project's folder, install only what's needed, and record
   a `requirements.txt`. Install Python itself if missing (Windows: `winget install` the
   Python package; macOS: `brew install python` or the python.org installer). The researcher
   never installs Python or packages.
 
-## 6. Confirm and hand off
+## 7. Confirm and hand off
 - Confirm the `CLAUDE.md` rules and skills are active.
-- Summarize in one short message: data is in `data/PROACT_ALL_FORMS/`, and each experiment
-  goes in `projects/<their-name>/<experiment>/` (you create it; ask their name once if you
-  don't know it). Suggest a starter prompt:
+- Summarize in one short message: data is in `data/PROACT_ALL_FORMS/`, each experiment goes
+  in `projects/<their-name>/<experiment>/` (you create it; ask their name once if you don't
+  know it) and stays private on their machine, and they're on their own branch
+  `researchers/<their-name>` — when a piece of work is finished they just say *"share this
+  work with the team"* and you promote it into `findings/` and push it there for them.
+  Suggest a starter prompt:
   > "Start a new experiment called `fvc-slope`; the data is in `data/PROACT_ALL_FORMS`. Show
   > how ALSFRS-R declines over time for bulbar vs limb onset, and whether baseline FVC
   > predicts a faster decline. Save the figures and write it up as a polished PDF."
