@@ -29,7 +29,7 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
 1. **Identify the researcher** from the clone, in this order: repo-local
    `git config user.name` → the current `researchers/<slug>` branch → their
    `projects/<name>/` folder. Only ask if none exist — and then persist the answer
-   (repo-local `git config user.name`). Slug = lowercase first name ("David Devos" → `david`).
+   (repo-local `git config user.name`). Slug = lowercase firstname-lastname ("Hélène Blasco" → `helene-blasco`), because first names can collide.
 
 2. **Confirm what's being shared.** Identify the deliverable in their project folder —
    normally the report PDF, the end-to-end script, and any key figures. Show the list and
