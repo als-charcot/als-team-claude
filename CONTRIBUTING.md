@@ -15,6 +15,11 @@ You don't need git commands or buttons. In the Code tab:
 
 (GitHub Desktop's **Fetch origin → Pull** does step 1 too, if you prefer buttons.)
 
+**Or use the slash commands** — same thing, if you like typing a command over a sentence:
+`/team-sync`, `/share-work`, `/sprint`, `/pubmed-feed`. Type `/` in the Code tab to see
+them. They appear once you've opened the folder after pulling — restart Claude Code if a
+new one doesn't show up yet.
+
 If git ever shows a conflict or an error you don't understand, **stop and ask the
 maintainer** rather than clicking through it. That's the whole safety rule.
 
