@@ -208,8 +208,10 @@ to test before running an analysis.
 
 **Then check for prior art — every time, before running anything:** search
 `HYPOTHESIS_LOG.md` and `findings/` for entries touching the same question, variables, or
-forms. If something exists, tell the researcher **who** tested **what**, **when**, with
-which inputs, and what came of it — then ask whether to build on it, replicate it, or
+forms. If something exists, tell the researcher **who** tested **what**, **when**, on **which
+dataset and release**, with which cohort and inputs, and what came of it — and note
+explicitly whether their question differs in dataset, cohort, or method, because **the same
+hypothesis on new data or a new cohort is a genuine new contribution, not a duplicate** — then ask whether to build on it, replicate it, or
 proceed differently. Duplicating a colleague's test unknowingly wastes a week; building on
 it is the whole point of the log.
 

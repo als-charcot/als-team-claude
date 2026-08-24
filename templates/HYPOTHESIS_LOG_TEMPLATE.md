@@ -16,7 +16,10 @@ Copy the block below for each new hypothesis. Number them H-001, H-002, ...
 
 **Hypothesis:** [what is being tested, in formal terms]
 
-**Data & inputs:** [which PRO-ACT forms/columns; cohort definition and filters; final n]
+**Dataset:** [which dataset AND which release/version — e.g. "PRO-ACT, 2026_02_27 release".
+Re-running the same hypothesis on a different or newer dataset is a NEW finding, not a duplicate]
+
+**Cohort & inputs:** [which forms/columns; inclusion and exclusion filters; final n]
 
 **Method:** [the model or test, in one line — e.g. "mixed-effects model of ALSFRS-R slope"]
 

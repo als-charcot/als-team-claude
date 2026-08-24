@@ -46,7 +46,7 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
 
 4. **Add a hypothesis-log entry.** Append a block to `HYPOTHESIS_LOG.md` at the repo root
    using the format in `templates/HYPOTHESIS_LOG_TEMPLATE.md` — status, owner, hypothesis,
-   **data & inputs (forms, cohort definition, n)**, **method**, finding with effect size +
+   **dataset (name + release/version)**, **cohort & inputs (forms, filters, n)**, **method**, finding with effect size +
    n, evidence path, open questions. Keep it short, but never omit the inputs and method:
    the log is how a colleague discovers the question was already tested, and judges whether
    the test applies to their cohort. **If an "Under analysis" entry for this question
