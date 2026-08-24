@@ -39,6 +39,9 @@ same folders on either OS.
 ## 3. Their own branch: `researchers/<name>` (you do this, with git)
 - Ask their first name **once** if you don't know it yet (`git config user.name` may already
   tell you); use the lowercase first name as the slug — e.g. "David Devos" → `david`.
+- **Persist the identity in the clone** so no future session ever asks again: set the
+  repo-local `git config user.name "<Name>"`, and `git config user.email "<email>"` with
+  the email address they use on GitHub (this is what links their commits to their account).
 - Create the branch from `main` if it doesn't exist yet, otherwise just check it out:
   `researchers/<name>`. Keep them on that branch.
 - Tell them in one plain sentence: *"This is your own branch — it's the only place your work

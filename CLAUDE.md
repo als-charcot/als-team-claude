@@ -30,7 +30,7 @@ get others' updates.
   saved figures, and a PDF report.
 - Each researcher's work lives under **`projects/<your-name>/`**. When the user starts a
   new experiment, create `projects/<name>/<experiment>/` (with `scripts/` and `outputs/`
-  inside) and work there. **If you don't know the researcher's name yet, ask once.**
+  inside) and work there. **Derive the researcher's name as described in “Knowing which researcher you're working with” below** (ask only if the clone carries no identity yet).
 - For any analysis, **write a complete Python script or Jupyter notebook that runs
   end-to-end** and save it in that experiment's `scripts/`. Do not compute inline only.
 - Save figures and the PDF report to that experiment's `outputs/`.
@@ -133,6 +133,21 @@ language**, then offer the allowed alternative (e.g. the PDF plus a static PNG).
 - **Never commit anything from `data/`** — no patient data leaves the machine, ever.
 - **Push only to `researchers/<name>`**, the current researcher's own branch — never
   anyone else's.
+
+### Knowing which researcher you're working with
+
+You start every session knowing nothing — the **clone carries the identity**, so derive it
+rather than asking. In priority order:
+
+1. **Repo-local git config:** `git config user.name` — set during setup; the authority.
+2. **The current branch:** `researchers/<slug>` names them (e.g. `researchers/manu`).
+3. **Their folder:** a single `projects/<name>/` directory.
+
+Only if none of these exist: **ask once, then persist it** — set the repo-local
+`git config user.name "<Name>"` (and `user.email` with the email they use on GitHub, if
+unset), and check out their `researchers/<slug>` branch. After that, no session ever needs
+to ask again. Never guess a name, and never derive it from the machine's global git config
+(that may be a work identity).
 
 ### Casual wording maps to the right action
 
