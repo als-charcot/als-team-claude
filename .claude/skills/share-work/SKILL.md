@@ -47,7 +47,13 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    using the format in `templates/HYPOTHESIS_LOG_TEMPLATE.md` (status, owner, hypothesis,
    finding with effect size + n, evidence path, open questions). Keep it short.
 
-5. **Commit and push to their branch:**
+5. **Before committing, verify the git identity is set** — repo-local
+   `git config user.name` and `user.email` must both return a value (the email must be the
+   one they use on GitHub, or the commit won't be linked to their account). If either is
+   missing, fix it per CLAUDE.md's "Knowing which researcher you're working with" before
+   going further.
+
+6. **Commit and push to their branch:**
    - Make sure their branch exists and is checked out: `researchers/<name>`
      (create it from the current `main` if it doesn't exist yet).
    - Stage **only** `findings/<name>/<slug>/` and `HYPOTHESIS_LOG.md`.
@@ -56,7 +62,7 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    - If the push is rejected because they lack access or aren't signed in, explain plainly
      and tell them to ask the maintainer (Emmanuel) — don't try to work around it.
 
-6. **Report back** in plain language: what was shared, which branch it went to, and that
+7. **Report back** in plain language: what was shared, which branch it went to, and that
    the maintainer will merge it into `develop` when the team should build on it. Give them
    the commit's short hash so they can reference it.
 

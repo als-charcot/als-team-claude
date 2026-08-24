@@ -143,11 +143,14 @@ rather than asking. In priority order:
 2. **The current branch:** `researchers/<slug>` names them (e.g. `researchers/manu`).
 3. **Their folder:** a single `projects/<name>/` directory.
 
-Only if none of these exist: **ask once, then persist it** — set the repo-local
-`git config user.name "<Name>"` (and `user.email` with the email they use on GitHub, if
-unset), and check out their `researchers/<slug>` branch. After that, no session ever needs
-to ask again. Never guess a name, and never derive it from the machine's global git config
-(that may be a work identity).
+Only if none of these exist: **ask once**. And regardless of *how* you learned the name —
+asked, or derived from the branch or folder — **make sure it is persisted**: if the
+repo-local `git config user.name` is unset, set it, and if `user.email` is unset, ask once
+for **the email address they use on GitHub** and set that too (commits are linked to their
+GitHub account by email — a missing or wrong email breaks attribution and can make the
+first commit fail outright). Check out their `researchers/<slug>` branch. After that, no
+session ever needs to ask again. Never guess a name, and never derive identity from the
+machine's global git config (that may be a work identity).
 
 ### Casual wording maps to the right action
 
