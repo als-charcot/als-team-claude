@@ -29,7 +29,7 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
 1. **Identify the researcher** from the clone, in this order: repo-local
    `git config user.name` → the current `researchers/<slug>` branch → their
    `projects/<name>/` folder. Only ask if none exist — and then persist the answer
-   (repo-local `git config user.name`). Slug = lowercase first name ("David Devos" → `david`).
+   (repo-local `git config user.name`). The branch is `researchers/<github-username>`, which is unique by construction.
 
 2. **Confirm what's being shared.** Identify the deliverable in their project folder —
    normally the report PDF, the end-to-end script, and any key figures. Show the list and
@@ -37,7 +37,8 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    files (> ~10 MB, e.g. big interactive HTML — keep those local and mention it).
 
 3. **Promote it** into `findings/<name>/<slug>/` (create the folders). Copy:
-   - the report PDF
+   - the report PDF **and the same report as `report.md`** (markdown is what future
+     prior-art checks actually read — always ship both)
    - the script that produced it
    - key figures (PNG)
    - a short `README.md`: the question, the finding with **effect size and n**, the caveats,
@@ -45,7 +46,7 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
 
 4. **Add a hypothesis-log entry.** Append a block to `HYPOTHESIS_LOG.md` at the repo root
    using the format in `templates/HYPOTHESIS_LOG_TEMPLATE.md` — status, owner, hypothesis,
-   **data & inputs (forms, cohort definition, n)**, **method**, finding with effect size +
+   **dataset (name + release/version)**, **cohort & inputs (forms, filters, n)**, **method**, finding with effect size +
    n, evidence path, open questions. Keep it short, but never omit the inputs and method:
    the log is how a colleague discovers the question was already tested, and judges whether
    the test applies to their cohort. **If an "Under analysis" entry for this question

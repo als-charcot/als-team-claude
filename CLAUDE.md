@@ -35,7 +35,9 @@ get others' updates.
   end-to-end** and save it in that experiment's `scripts/`. Do not compute inline only.
 - Save figures and the PDF report to that experiment's `outputs/`.
 - When asked for analysis results, **produce a report in the `polished-pdf-reports`
-  format** (see that skill in `.claude/skills/`).
+  format** (see that skill in `.claude/skills/`). **Always save the report twice: the PDF
+  for people, and the same content as markdown (`report.md`) for Claude** — future
+  prior-art checks read the markdown, and PDFs are hard to search and quote.
 - Before starting an analysis: **list the columns of the relevant CSV first** —
   never assume column names. Then check for missing values and note quality issues.
   Then confirm the question or hypothesis with the user before running.
@@ -95,7 +97,7 @@ Every report also includes:
 
 ## Collaboration & branches (how work gets shared)
 
-- Each researcher has **one durable branch: `researchers/<name>`**. All their pushes go
+- Each researcher has **one durable branch named after their GitHub username: `researchers/<github-username>`**. All their pushes go
   there. **`main` and `develop` are protected — never push to them**, and never push to
   another person's branch. The maintainer merges work upward into `develop`.
 - **We do not use pull requests.** The commit history on each person's branch is the record.
@@ -109,7 +111,9 @@ Every report also includes:
 
 Promoted into `findings/<name>/<slug>/` — **these and nothing else**:
 
-- `report.pdf` — the polished report
+- `report.pdf` — the polished report (for people)
+- `report.md` — **the same report in markdown** (for Claude: future prior-art checks read
+  this, and a PDF is far harder to search and quote than markdown)
 - the end-to-end script that produced it (e.g. `analysis.py`)
 - key figures as `.png`
 - `README.md` — the question, the finding **with effect size and n**, the caveats, and how
@@ -140,7 +144,7 @@ You start every session knowing nothing — the **clone carries the identity**, 
 rather than asking. In priority order:
 
 1. **Repo-local git config:** `git config user.name` — set during setup; the authority.
-2. **The current branch:** `researchers/<slug>` names them (e.g. `researchers/manu`).
+2. **The current branch:** `researchers/<github-username>` identifies them.
 3. **Their folder:** a single `projects/<name>/` directory.
 
 Only if none of these exist: **ask once**. And regardless of *how* you learned the name —
@@ -204,8 +208,10 @@ to test before running an analysis.
 
 **Then check for prior art — every time, before running anything:** search
 `HYPOTHESIS_LOG.md` and `findings/` for entries touching the same question, variables, or
-forms. If something exists, tell the researcher **who** tested **what**, **when**, with
-which inputs, and what came of it — then ask whether to build on it, replicate it, or
+forms. If something exists, tell the researcher **who** tested **what**, **when**, on **which
+dataset and release**, with which cohort and inputs, and what came of it — and note
+explicitly whether their question differs in dataset, cohort, or method, because **the same
+hypothesis on new data or a new cohort is a genuine new contribution, not a duplicate** — then ask whether to build on it, replicate it, or
 proceed differently. Duplicating a colleague's test unknowingly wastes a week; building on
 it is the whole point of the log.
 

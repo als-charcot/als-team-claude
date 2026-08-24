@@ -38,7 +38,7 @@ same folders on either OS.
 
 ## 3. Their own branch: `researchers/<name>` (you do this, with git)
 - Ask their first name **once** if you don't know it yet (`git config user.name` may already
-  tell you); use the lowercase first name as the slug — e.g. "David Devos" → `david`.
+  tell you); the branch is named after their **GitHub username**, which is globally unique, so there is never a collision: username `heleneblasco` → branch `researchers/heleneblasco`. Ask for the username if the branch does not already tell you.
 - **Persist the identity in the clone** so no future session ever asks again: set the
   repo-local `git config user.name "<Name>"`, and `git config user.email "<email>"` with
   the email address they use on GitHub (this is what links their commits to their account).

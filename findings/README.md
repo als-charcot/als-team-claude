@@ -20,7 +20,8 @@ findings/
 └── <your-name>/
     └── <short-slug>/
         ├── README.md      the question, the finding (effect size + n), caveats, how to re-run
-        ├── report.pdf     the polished report
+        ├── report.pdf     the polished report (for people)
+        ├── report.md      the same report in markdown (for Claude to search/quote)
         ├── analysis.py    the end-to-end script that produced it
         └── *.png          key figures
 ```

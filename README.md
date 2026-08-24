@@ -126,6 +126,8 @@ latest rules and skills**. You never have to remember to update. Your `data/` an
 | Catching up | *"What's new from the team since last week?"* |
 
 Say it however comes naturally — "get the latest", "save this", "send it up" all work.
+If you prefer typing a command, the same three exist as **slash commands**: `/team-sync`,
+`/share-work`, `/sprint` (plus `/pubmed-feed`). Type `/` to see them.
 
 ## Data note
 
