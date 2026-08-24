@@ -97,7 +97,7 @@ Every report also includes:
 
 ## Collaboration & branches (how work gets shared)
 
-- Each researcher has **one durable branch: `researchers/<firstname>-<lastname>`**. All their pushes go
+- Each researcher has **one durable branch named after their GitHub username: `researchers/<github-username>`**. All their pushes go
   there. **`main` and `develop` are protected — never push to them**, and never push to
   another person's branch. The maintainer merges work upward into `develop`.
 - **We do not use pull requests.** The commit history on each person's branch is the record.
@@ -144,7 +144,7 @@ You start every session knowing nothing — the **clone carries the identity**, 
 rather than asking. In priority order:
 
 1. **Repo-local git config:** `git config user.name` — set during setup; the authority.
-2. **The current branch:** `researchers/<slug>` names them (e.g. `researchers/helene-blasco`).
+2. **The current branch:** `researchers/<github-username>` identifies them.
 3. **Their folder:** a single `projects/<name>/` directory.
 
 Only if none of these exist: **ask once**. And regardless of *how* you learned the name —
