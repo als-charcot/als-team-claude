@@ -48,7 +48,8 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    **data & inputs (forms, cohort definition, n)**, **method**, finding with effect size +
    n, evidence path, open questions. Keep it short, but never omit the inputs and method:
    the log is how a colleague discovers the question was already tested, and judges whether
-   the test applies to their cohort.
+   the test applies to their cohort. **If an "Under analysis" entry for this question
+   already exists, update it in place** (status + finding) instead of appending a duplicate.
 
 5. **Before committing, verify the git identity is set** — repo-local
    `git config user.name` and `user.email` must both return a value (the email must be the

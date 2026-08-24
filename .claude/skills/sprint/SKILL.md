@@ -19,6 +19,9 @@ throughout (effect sizes with p-values, hedge mechanism claims, save files not c
 - **Prior-art check first:** search `HYPOTHESIS_LOG.md` and `findings/` for existing work on
   this question. If found, summarize who tested what and with which inputs, and ask whether
   to build on it, replicate it, or proceed differently.
+- **Register the intent:** append a `HYPOTHESIS_LOG.md` entry with **Status: Under
+  analysis** (owner, date, hypothesis, planned inputs) so nobody duplicates it in flight.
+  Update that same entry with the result at Stage 5.
 - Restate the request as a **testable hypothesis**. Agree **success criteria**: what result
   would actually answer it, the effect size that would matter, and the expected n.
 - Confirm the data and which forms/columns (list columns first; never assume).

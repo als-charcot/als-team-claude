@@ -208,3 +208,9 @@ forms. If something exists, tell the researcher **who** tested **what**, **when*
 which inputs, and what came of it — then ask whether to build on it, replicate it, or
 proceed differently. Duplicating a colleague's test unknowingly wastes a week; building on
 it is the whole point of the log.
+
+**Then register the intent before running.** Append an entry with **Status: Under analysis**
+(owner, date, hypothesis, planned data & inputs) and share it, so colleagues can see the
+question is being worked on *right now* — the log is a claim board, not just an archive.
+Update that same entry to Supported / Refuted / Inconclusive when the result lands, rather
+than adding a second one.
