@@ -201,3 +201,10 @@ confirm it with them before acting.
 
 Ask the user what they need to know about the data and which hypothesis or question
 to test before running an analysis.
+
+**Then check for prior art — every time, before running anything:** search
+`HYPOTHESIS_LOG.md` and `findings/` for entries touching the same question, variables, or
+forms. If something exists, tell the researcher **who** tested **what**, **when**, with
+which inputs, and what came of it — then ask whether to build on it, replicate it, or
+proceed differently. Duplicating a colleague's test unknowingly wastes a week; building on
+it is the whole point of the log.

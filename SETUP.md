@@ -44,6 +44,10 @@ same folders on either OS.
   the email address they use on GitHub (this is what links their commits to their account).
 - Create the branch from `main` if it doesn't exist yet, otherwise just check it out:
   `researchers/<name>`. Keep them on that branch.
+- **Immediately sync the branch from `main`:** `git fetch origin` then
+  `git merge --no-edit origin/main`. A pre-created branch may lag `main`, and until this
+  merge the working tree (including this very file) can be stale. **Re-read SETUP.md after
+  the merge if it changed**, and continue from the newest version.
 - Tell them in one plain sentence: *"This is your own branch — it's the only place your work
   ever gets pushed, and `main`/`develop` stay untouched."*
 - Mention once that pushing needs them **signed in to GitHub on this machine** (GitHub

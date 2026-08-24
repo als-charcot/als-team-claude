@@ -16,6 +16,9 @@ loop at each stage; you do the technical work. Follow the team's `CLAUDE.md` rul
 throughout (effect sizes with p-values, hedge mechanism claims, save files not chat).
 
 ## Stage 1 — Frame (get this right before touching data)
+- **Prior-art check first:** search `HYPOTHESIS_LOG.md` and `findings/` for existing work on
+  this question. If found, summarize who tested what and with which inputs, and ask whether
+  to build on it, replicate it, or proceed differently.
 - Restate the request as a **testable hypothesis**. Agree **success criteria**: what result
   would actually answer it, the effect size that would matter, and the expected n.
 - Confirm the data and which forms/columns (list columns first; never assume).

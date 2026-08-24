@@ -16,6 +16,10 @@ Copy the block below for each new hypothesis. Number them H-001, H-002, ...
 
 **Hypothesis:** [what is being tested, in formal terms]
 
+**Data & inputs:** [which PRO-ACT forms/columns; cohort definition and filters; final n]
+
+**Method:** [the model or test, in one line — e.g. "mixed-effects model of ALSFRS-R slope"]
+
 **Finding:** [the result — with effect size, n, and uncertainty, not just a p-value]
 
 **Evidence:** [link to the script / commit / report that supports this]
