@@ -37,7 +37,8 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    files (> ~10 MB, e.g. big interactive HTML — keep those local and mention it).
 
 3. **Promote it** into `findings/<name>/<slug>/` (create the folders). Copy:
-   - the report PDF
+   - the report PDF **and the same report as `report.md`** (markdown is what future
+     prior-art checks actually read — always ship both)
    - the script that produced it
    - key figures (PNG)
    - a short `README.md`: the question, the finding with **effect size and n**, the caveats,

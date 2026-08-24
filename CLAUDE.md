@@ -35,7 +35,9 @@ get others' updates.
   end-to-end** and save it in that experiment's `scripts/`. Do not compute inline only.
 - Save figures and the PDF report to that experiment's `outputs/`.
 - When asked for analysis results, **produce a report in the `polished-pdf-reports`
-  format** (see that skill in `.claude/skills/`).
+  format** (see that skill in `.claude/skills/`). **Always save the report twice: the PDF
+  for people, and the same content as markdown (`report.md`) for Claude** — future
+  prior-art checks read the markdown, and PDFs are hard to search and quote.
 - Before starting an analysis: **list the columns of the relevant CSV first** —
   never assume column names. Then check for missing values and note quality issues.
   Then confirm the question or hypothesis with the user before running.
@@ -109,7 +111,9 @@ Every report also includes:
 
 Promoted into `findings/<name>/<slug>/` — **these and nothing else**:
 
-- `report.pdf` — the polished report
+- `report.pdf` — the polished report (for people)
+- `report.md` — **the same report in markdown** (for Claude: future prior-art checks read
+  this, and a PDF is far harder to search and quote than markdown)
 - the end-to-end script that produced it (e.g. `analysis.py`)
 - key figures as `.png`
 - `README.md` — the question, the finding **with effect size and n**, the caveats, and how
