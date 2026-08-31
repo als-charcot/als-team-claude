@@ -54,14 +54,20 @@ def get_onset(row):
     # try string column first (more complete)
     for col in ["Site_of_Onset"]:
         val = str(row.get(col, ""))
-        if "Bulbar" in val: return "Bulbar"
-        if "Limb and Bulbar" in val or "Limb+Bulbar" in val: return "Limb+Bulbar"
-        if "Limb" in val or "Spine" in val: return "Limb"
+        # Check the COMBINED label first: "Limb and Bulbar" contains "Bulbar", so testing
+        # for "Bulbar" first silently labelled mixed-onset subjects as pure bulbar and
+        # contaminated the comparison group.
+        has_b = "Bulbar" in val
+        has_l = "Limb" in val or "Spine" in val
+        if has_b and has_l: return "Limb+Bulbar"
+        if has_b: return "Bulbar"
+        if has_l: return "Limb"
     # fall back to binary flag columns
-    if row.get("Site_of_Onset___Bulbar") == 1: return "Bulbar"
-    if row.get("Site_of_Onset___Limb_and_Bulbar") == 1: return "Limb+Bulbar"
-    if row.get("Site_of_Onset___Limb") == 1 or row.get("Site_of_Onset___Spine") == 1:
-        return "Limb"
+    fb = row.get("Site_of_Onset___Bulbar") == 1
+    fl = (row.get("Site_of_Onset___Limb") == 1 or row.get("Site_of_Onset___Spine") == 1)
+    if row.get("Site_of_Onset___Limb_and_Bulbar") == 1 or (fb and fl): return "Limb+Bulbar"
+    if fb: return "Bulbar"
+    if fl: return "Limb"
     return None
 
 hist1["onset_type"] = hist1.apply(get_onset, axis=1)
@@ -70,9 +76,10 @@ print(f"  Subjects with onset type: {len(onset):,}")
 print(f"  {onset['onset_type'].value_counts().to_dict()}")
 
 # ── ALSFRS-R SCORE + SLOPE ────────────────────────────────────────────────────
+# ALSFRS-R (0-48) and the older ALSFRS (0-40) are DIFFERENT SCALES. Filling one from the
+# other put ~8-point artifactual steps inside a single subject's trajectory, so the fitted
+# slope measured scale-switching rather than decline. Use ALSFRS-R only.
 alsfrs["score"] = pd.to_numeric(alsfrs["ALSFRS_R_Total"], errors="coerce")
-alsfrs["score"] = alsfrs["score"].fillna(
-    pd.to_numeric(alsfrs["ALSFRS_Total"], errors="coerce"))
 alsfrs["delta"] = pd.to_numeric(alsfrs["ALSFRS_Delta"], errors="coerce")
 valid = alsfrs.dropna(subset=["score","delta"]).copy()
 
