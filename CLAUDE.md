@@ -52,11 +52,14 @@ get others' updates.
 2. **Observational data confirms patterns; it does not prove mechanisms.**
    Distinguish "X correlates with Y" from "X causes Y." Hedge mechanism claims that
    rest on cohort data accordingly.
-3. **No finding is shared unchallenged.** Before promotion, run the **adversarial-review**
-   skill: numbers tied to what the script computed, independent reviewers on the
-   confounding / survivorship / statistics / reproducibility lenses, and a permutation
-   negative control on the headline effect. Fix the script, never the sentence. Record
-   withdrawn claims with the mechanism that defeated them.
+3. **The adversarial review closes every experiment, and no finding is shared unchallenged.**
+   Run the **adversarial-review** skill as the **final stage of the analysis itself**, before
+   the researcher decides whether the result is worth sharing: numbers tied to what the
+   script computed, independent reviewers with separate context on the confounding /
+   survivorship / statistics / reproducibility lenses, and a permutation negative control on
+   the headline effect. `share-work` enforces it again at the share boundary as a backstop.
+   Fix the script, never the sentence. Record withdrawn claims with the mechanism that
+   defeated them.
 4. **Run the methodology-pitfall checklist** (`references/methodology_pitfalls.md`)
    against any cohort finding before accepting it.
 

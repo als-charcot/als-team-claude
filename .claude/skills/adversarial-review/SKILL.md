@@ -35,7 +35,19 @@ Three convictions drive it:
 
 ## When to run it
 
-- **Always before `share-work` promotes a finding.** This is a gate, not an option.
+**Primarily: as the closing stage of every experiment.** The review is not a publication
+step bolted on at the end of the week. It is the last thing an experiment does, before the
+researcher decides whether the result is worth sharing at all. Running it here is the point:
+the decision to share should be made by someone who already knows what survived scrutiny.
+
+That ordering matters. A researcher who reviews only when they have decided to share has
+already committed to the finding, and a review that arrives after the decision is a
+formality. A researcher who reviews to *reach* the decision is doing science.
+
+- **At the end of the experiment**, as its final stage, whatever happens next. This is the
+  default and the one that matters.
+- **Again at the share boundary**, where `share-work` enforces it as a backstop, in case an
+  older result is being promoted or the closing review was skipped.
 - Before any report or slide leaves the researcher's machine.
 - When an effect is surprisingly clean, or a p-value is very small with a tiny effect size.
 - When a cohort was redefined after the first results were seen.

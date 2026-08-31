@@ -31,9 +31,12 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    `projects/<name>/` folder. Only ask if none exist — and then persist the answer
    (repo-local `git config user.name`). The branch is `researchers/<github-username>`, which is unique by construction.
 
-2. **Run the adversarial review. This is a gate, not an option.** Use the
-   **adversarial-review** skill before promoting anything. Nothing reaches `findings/`
-   unchallenged. In short: re-run the script to pin what it actually computes, run
+2. **Confirm the adversarial review has been run, and run it now if not.** It should
+   already have happened as the closing stage of the experiment, which is where it belongs:
+   the researcher ought to have decided to share *because* they know what survived. This
+   step is the backstop, and it is not optional. Nothing reaches `findings/` unchallenged.
+   If a prior review exists, say when it ran and what it concluded rather than repeating it
+   blindly. Otherwise run it here. In short: re-run the script to pin what it actually computes, run
    `claim_audit.py` so every number in the report is tied to pipeline output, fan out
    independent reviewers on the confounding / survivorship / statistics / reproducibility
    lenses, and run `mutation_check.py` as a negative control on the headline effect.

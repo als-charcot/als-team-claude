@@ -46,6 +46,16 @@ throughout (effect sizes with p-values, hedge mechanism claims, save files not c
   design, no confounder adjustment, survivorship / healthy-user bias, multiple testing,
   observational→causal overreach). Keep only what survives.
 
+## Stage 4b — The review closes the experiment
+
+The adversarial review is the **last stage of the experiment**, not a step that belongs to
+sharing. Run it to completion here, and report what survived and what did not, before the
+researcher decides anything about sharing.
+
+Only then ask whether they want to share. They should be making that decision already
+knowing which claims held, which were withdrawn, and why. If the review has not been run,
+the experiment is not finished.
+
 ## Stage 5 — Write up, then offer to share
 - Produce the report with the **polished-pdf-reports** skill (the team's 6-part per-finding
   structure). Save it to that experiment's own `outputs/` — which is **private**
