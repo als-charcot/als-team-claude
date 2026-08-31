@@ -30,6 +30,21 @@ same folders on either OS.
 - If this is **not** a clone (downloaded ZIP), updates come by re-downloading the ZIP; a
   clone is better for automatic updates — offer to set one up.
 
+## 1b. Windows path-length insurance (cheap, do it once)
+
+This repo has deeply nested skill folders (longest internal path ~105 characters). Windows
+caps total paths at 260 by default, so a clone inside an already-deep folder can fail to
+check out some files, and the failure is confusing rather than obvious. Run once, with
+consent, on Windows:
+
+```
+git config --global core.longpaths true
+```
+
+If a clone ever reports that it could not create a file, or `git status` shows large numbers
+of files as deleted while they clearly exist on disk, this is the cause. Re-clone into a
+shorter path (e.g. `C:\ALS`) after setting the flag.
+
 ## 2. Create the standard folders (idempotent — never overwrite)
 - Ensure `data/` and `projects/` exist at the repo root; create them only if missing.
 - `findings/` and `HYPOTHESIS_LOG.md` **already come with the repo and are tracked in git** —
