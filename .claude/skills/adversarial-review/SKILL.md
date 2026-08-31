@@ -63,9 +63,50 @@ python .claude/skills/adversarial-review/scripts/claim_audit.py claims.json
 
 ## Phase 2 — Fan out adversarially
 
-Spawn **independent reviewers, one per lens, each with fresh context**. Give them the data
-and the script, not your conclusion. Full rules and a prompt skeleton:
-`references/fanout-lenses.md`.
+This is the heart of the skill, and the part that is easy to do in a way that looks right and
+achieves nothing. **Each reviewer is a separate agent with its own fresh context window.**
+
+```
+   YOUR SESSION                        holds the whole history: the analysis,
+   (knows everything)                  your reasoning, why you believe it
+        │
+        │  dispatches, one per lens. each gets ONLY the payload below.
+        │
+   ┌────┴────┬─────────┬─────────┬─────────┐
+   ▼         ▼         ▼         ▼         ▼
+ confound  surviv.   stats    reprod.   (clinical)
+ FRESH     FRESH     FRESH    FRESH      FRESH        ← separate context each
+   │         │         │         │         │
+   │  no reviewer sees: your summary, your reasoning, this conversation,
+   │  or any other reviewer's verdict. They cannot agree by influence.
+   ▼         ▼         ▼         ▼         ▼
+     verdicts return independently, and only then are they compared
+```
+
+**What each reviewer is given (the whole payload, nothing more):**
+
+1. The claim under review, **quoted verbatim**.
+2. Paths to the **script**, its **summary output**, and the **data**.
+3. Its **one lens**, and which catalogue sections apply.
+4. The output shape, and the instruction to transcribe before verdict.
+
+**What each reviewer is deliberately NOT given:**
+
+- Your summary of the analysis, or why you think it is right. A reviewer handed your
+  reasoning inherits your blind spots and returns them to you as agreement.
+- Any other reviewer's verdict, or their findings in progress. Reviewers run in parallel
+  precisely so they cannot converge by influence.
+- The conversation history. A fresh context is what makes the second opinion a second
+  opinion rather than an echo.
+
+**Why independence is the whole point.** If three reviewers with separate contexts, separate
+lenses and no knowledge of each other land on the same defect, that agreement carries
+information. If they were shown each other's work, or your reasoning, it carries none. The
+value is not the number of reviewers; it is that none of them could have been influenced.
+
+Worked examples of a lens verifying and refuting a claim, including a reviewer that
+over-claimed and how that was caught: **`references/examples.md`**.
+Full rules and a prompt skeleton: `references/fanout-lenses.md`.
 
 The minimum four lenses for a PRO-ACT cohort finding:
 
@@ -138,6 +179,8 @@ more, not that the report sounds more confident.
 ## Files
 
 - `references/fanout-lenses.md` — the lenses, the five prompt rules, a prompt skeleton
+- `references/examples.md` — worked examples: a claim refuted, a claim that held, and a
+  reviewer over-claiming
 - `references/failure-modes.md` — the PRO-ACT instrument-failure catalogue
 - `scripts/claim_audit.py` — the standing gate: prose numbers vs pipeline output
 - `scripts/mutation_check.py` — permutation and negative controls
