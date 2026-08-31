@@ -33,6 +33,10 @@ is the core you'll use most.
   execute (parallel agents) → stress-test with independent adversarial agents → polished
   PDF + hypothesis-log entry. Just say "start a sprint on <question>". See
   `templates/SPRINT_TEMPLATE.md`.
+- ⭐ **adversarial-review** — the quality gate. Before any finding is shared it is audited
+  against what the script actually computed: numbers tied to pipeline output
+  (`claim_audit.py`), independent reviewers on four failure lenses, a PRO-ACT failure
+  catalogue, and a permutation negative control (`mutation_check.py`). Say "red-team this".
 - ⭐ **share-work** — how your finished work reaches the team. Say "share this work with the
   team" and Claude promotes the deliverable into `findings/<you>/<slug>/`, appends your
   `HYPOTHESIS_LOG.md` entry, and pushes to your own branch. Never touches `main`/`develop`,

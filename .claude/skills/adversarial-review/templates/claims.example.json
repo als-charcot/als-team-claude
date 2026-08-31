@@ -1,0 +1,53 @@
+{
+  "_comment": [
+    "The standing gate. Copy this next to your analysis, point it at the summary file your",
+    "script writes and at your report, then run:",
+    "  python .claude/skills/adversarial-review/scripts/claim_audit.py claims.json",
+    "Rules: every pattern needs exactly ONE capture group, and a pattern that matches",
+    "nothing FAILS (otherwise the check dies silently the moment you reword a sentence).",
+    "Paths are relative to --root, which defaults to the current directory."
+  ],
+
+  "sources": {
+    "stats": "outputs/summary.json",
+    "cohort": "outputs/cohort_table.csv"
+  },
+
+  "documents": {
+    "report": "outputs/report.md",
+    "readme": "README.md"
+  },
+
+  "claims": [
+    {
+      "doc": "report", "kind": "number",
+      "pattern": "n = ([0-9,]+) subjects with a fittable slope",
+      "source": "stats", "path": "cohort.n_with_slope", "tol": 0
+    },
+    {
+      "doc": "report", "kind": "number",
+      "pattern": "Cohen's d = (-?[0-9.]+)",
+      "source": "stats", "path": "bulbar_vs_limb.cohens_d", "tol": 0.005
+    },
+    {
+      "doc": "report", "kind": "number",
+      "pattern": "Pearson r = (-?[0-9.]+)",
+      "source": "stats", "path": "fvc_vs_slope.pearson_r", "tol": 0.005
+    },
+    {
+      "doc": "report", "kind": "set",
+      "pattern": "onset groups compared: ([A-Za-z, ]+)",
+      "source": "stats", "path": "bulbar_vs_limb.groups", "sep": ","
+    },
+    {
+      "doc": "readme", "kind": "number",
+      "pattern": "final sample size of ([0-9,]+)",
+      "source": "stats", "path": "cohort.n_with_slope", "tol": 0
+    },
+    {
+      "doc": "report", "kind": "set",
+      "pattern": "forms used: ([A-Za-z_, ]+)",
+      "source": "stats", "path": "cohort.forms", "sep": ","
+    }
+  ]
+}

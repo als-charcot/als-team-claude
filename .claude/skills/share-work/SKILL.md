@@ -31,12 +31,25 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    `projects/<name>/` folder. Only ask if none exist — and then persist the answer
    (repo-local `git config user.name`). The branch is `researchers/<github-username>`, which is unique by construction.
 
-2. **Confirm what's being shared.** Identify the deliverable in their project folder —
+2. **Run the adversarial review. This is a gate, not an option.** Use the
+   **adversarial-review** skill before promoting anything. Nothing reaches `findings/`
+   unchallenged. In short: re-run the script to pin what it actually computes, run
+   `claim_audit.py` so every number in the report is tied to pipeline output, fan out
+   independent reviewers on the confounding / survivorship / statistics / reproducibility
+   lenses, and run `mutation_check.py` as a negative control on the headline effect.
+   - If a claim does not survive, **fix the script and re-derive**, never the sentence.
+   - Record anything withdrawn, with the mechanism that defeated it, under a
+     **Withdrawn** heading in the finding's `README.md`.
+   - Append the surviving verdicts to the `HYPOTHESIS_LOG.md` entry.
+   - If the researcher declines the review, say plainly that the finding will be shared
+     unchallenged and record that in the log entry.
+
+3. **Confirm what's being shared.** Identify the deliverable in their project folder —
    normally the report PDF, the end-to-end script, and any key figures. Show the list and
    confirm before copying. Exclude: raw data, virtual environments, caches, and very large
    files (> ~10 MB, e.g. big interactive HTML — keep those local and mention it).
 
-3. **Promote it** into `findings/<name>/<slug>/` (create the folders). Copy:
+4. **Promote it** into `findings/<name>/<slug>/` (create the folders). Copy:
    - the report PDF **and the same report as `report.md`** (markdown is what future
      prior-art checks actually read — always ship both)
    - the script that produced it
@@ -44,7 +57,7 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    - a short `README.md`: the question, the finding with **effect size and n**, the caveats,
      and how to re-run it.
 
-4. **Add a hypothesis-log entry.** Append a block to `HYPOTHESIS_LOG.md` at the repo root
+5. **Add a hypothesis-log entry.** Append a block to `HYPOTHESIS_LOG.md` at the repo root
    using the format in `templates/HYPOTHESIS_LOG_TEMPLATE.md` — status, owner, hypothesis,
    **dataset (name + release/version)**, **cohort & inputs (forms, filters, n)**, **method**, finding with effect size +
    n, evidence path, open questions. Keep it short, but never omit the inputs and method:
@@ -52,13 +65,13 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    the test applies to their cohort. **If an "Under analysis" entry for this question
    already exists, update it in place** (status + finding) instead of appending a duplicate.
 
-5. **Before committing, verify the git identity is set** — repo-local
+6. **Before committing, verify the git identity is set** — repo-local
    `git config user.name` and `user.email` must both return a value (the email must be the
    one they use on GitHub, or the commit won't be linked to their account). If either is
    missing, fix it per CLAUDE.md's "Knowing which researcher you're working with" before
    going further.
 
-6. **Commit and push to their branch:**
+7. **Commit and push to their branch:**
    - Make sure their branch exists and is checked out: `researchers/<name>`
      (create it from the current `main` if it doesn't exist yet).
    - Stage **only** `findings/<name>/<slug>/` and `HYPOTHESIS_LOG.md`.
@@ -67,7 +80,7 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    - If the push is rejected because they lack access or aren't signed in, explain plainly
      and tell them to ask the maintainer (Emmanuel) — don't try to work around it.
 
-7. **Report back** in plain language: what was shared, which branch it went to, and that
+8. **Report back** in plain language: what was shared, which branch it went to, and that
    the maintainer will merge it into `develop` when the team should build on it. Give them
    the commit's short hash so they can reference it.
 

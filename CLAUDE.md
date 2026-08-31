@@ -52,7 +52,12 @@ get others' updates.
 2. **Observational data confirms patterns; it does not prove mechanisms.**
    Distinguish "X correlates with Y" from "X causes Y." Hedge mechanism claims that
    rest on cohort data accordingly.
-3. **Run the methodology-pitfall checklist** (`references/methodology_pitfalls.md`)
+3. **No finding is shared unchallenged.** Before promotion, run the **adversarial-review**
+   skill: numbers tied to what the script computed, independent reviewers on the
+   confounding / survivorship / statistics / reproducibility lenses, and a permutation
+   negative control on the headline effect. Fix the script, never the sentence. Record
+   withdrawn claims with the mechanism that defeated them.
+4. **Run the methodology-pitfall checklist** (`references/methodology_pitfalls.md`)
    against any cohort finding before accepting it.
 
 ## Report structure (every deliverable)

@@ -38,6 +38,9 @@ throughout (effect sizes with p-values, hedge mechanism claims, save files not c
   model, or dataset. Fan out, then combine the results.
 
 ## Stage 4 — Stress-test (this is what makes the result trustworthy)
+- **Use the adversarial-review skill for this stage.** It carries the lenses, the PRO-ACT
+  failure catalogue, the claim audit and the negative control.
+
 - Spawn several **independent adversarial agents** to try to *break* the finding, each with
   a different lens, and run the `references/methodology_pitfalls.md` checklist (circular
   design, no confounder adjustment, survivorship / healthy-user bias, multiple testing,
