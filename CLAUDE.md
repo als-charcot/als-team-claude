@@ -186,6 +186,20 @@ confirm it with them before acting.
 - `templates/` — report and hypothesis-log templates.
 - `references/` — shared reference docs (methodology pitfalls, etc.).
 
+## Outside research (not PRO-ACT)
+
+- When the user asks what is new, recent or published on a topic, or whether an outside
+  claim holds up, use the **research-watch** skill. It only queries sources the team has
+  validated (`.claude/skills/research-watch/references/sources.md`).
+- **Always state the evidence tier before the claim.** A preprint is not peer reviewed, a
+  trial registration is a plan rather than a result, a press release is the company's own
+  account. Never flatten these into "studies show".
+- **An outside claim is a hypothesis, not a finding.** If it looks testable in PRO-ACT, run
+  the prior-art check, register it as Under analysis with the outside claim recorded as the
+  motivation, then treat it as a normal experiment with the adversarial review at the end.
+- If a source in a digest failed, say the digest is incomplete rather than presenting what
+  arrived as the whole picture.
+
 ## Skills
 
 - Team skills live in `.claude/skills/` and activate automatically when relevant.
