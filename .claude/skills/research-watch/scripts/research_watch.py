@@ -72,6 +72,19 @@ def get(url: str, timeout: int = 30, tries: int = 3) -> bytes:
     raise RuntimeError(f"{type(last).__name__}: {last}")
 
 
+def _matches_all(blob: str, terms: list[str]) -> bool:
+    """Word-boundary match, not substring.
+
+    Substring matching made a short query catastrophically loose: "ALS" matched
+    "individuALS", "signALS" and every German "als", pulling in papers on knee pain and
+    polycystic ovary syndrome. Hyphens and dots inside a term (TDP-43, C9orf72) are kept.
+    """
+    for t in terms:
+        if not re.search(r"(?<![A-Za-z0-9])" + re.escape(t) + r"(?![A-Za-z0-9])", blob):
+            return False
+    return True
+
+
 def norm_title(t: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", (t or "").lower()).strip()
 
@@ -79,7 +92,16 @@ def norm_title(t: str) -> str:
 # ─────────────────────────────── adapters ────────────────────────────────────
 
 def fetch_pubmed(query: str, days: int, cap: int) -> list[dict]:
-    """PubMed / MEDLINE via E-utilities. Tier: peer-reviewed."""
+    """PubMed / MEDLINE via E-utilities. Tier: peer-reviewed.
+
+    A bare "ALS" is ambiguous in MEDLINE: it also expands to Advanced Life Support, which
+    returned out-of-hospital cardiac arrest papers. When the query is just the acronym we
+    pin it to the disease with the MeSH term instead.
+    """
+    bare = query.strip().lower() in ("als", "mnd", "als/mnd")
+    if bare:
+        query = ('"Amyotrophic Lateral Sclerosis"[MeSH Terms] OR '
+                 '"amyotrophic lateral sclerosis"[Title/Abstract]')
     q = urllib.parse.quote(query)
     es = (f"https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term={q}"
           f"&retmax={cap}&retmode=json&datetype=pdat&reldate={days}&sort=date")
@@ -205,7 +227,7 @@ def fetch_preprints(query: str, days: int, cap: int,
         for batch in batches:
             for it in batch:
                 blob = f"{it.get('title','')} {it.get('abstract','')}".lower()
-                if terms and not all(t in blob for t in terms):
+                if terms and not _matches_all(blob, terms):
                     continue
                 doi = (it.get("doi") or "").strip()
                 if doi in seen:
@@ -249,7 +271,7 @@ def fetch_crossref(query: str, days: int, cap: int) -> list[dict]:
         # Require every term to actually appear. Crossref relevance ranking alone is not
         # enough for a query whose tokens are common words in another language.
         blob = f"{title} {' '.join(it.get('subject') or [])} {(it.get('abstract') or '')}".lower()
-        if terms and not all(t in blob for t in terms):
+        if terms and not _matches_all(blob, terms):
             continue
         parts = ((it.get("published-online") or it.get("published-print")
                   or it.get("created") or {}).get("date-parts") or [[]])[0]
