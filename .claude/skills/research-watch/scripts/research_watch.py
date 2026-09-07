@@ -50,6 +50,11 @@ TIERS = {
 }
 
 
+TIER_TAG = {"peer-reviewed": "PEER-REVIEWED", "trial": "TRIAL-REG",
+            "preprint": "PREPRINT", "conference": "CONF-ABSTRACT",
+            "press-release": "COMPANY-PR", "patent": "PATENT", "news": "NEWS"}
+
+
 def get(url: str, timeout: int = 30, tries: int = 3) -> bytes:
     last = None
     for i in range(tries):
@@ -303,6 +308,32 @@ def render(items, query, days, stats, dropped) -> str:
     return "\n".join(L)
 
 
+def render_index(items, query, days, stats) -> str:
+    """One line per item, no abstracts. This is what Claude reads by default: a 20-item
+    digest costs a few hundred tokens instead of several thousand, while the full digest
+    stays on disk for when a specific item is actually opened."""
+    L = [f"# Index: {query}  (last {days} days, run {date.today().isoformat()})", ""]
+    src = ", ".join(f"{k}={v['n']}" + ("(FAILED)" if v["error"] else "")
+                    for k, v in stats.items())
+    L += [f"Sources: {src}", ""]
+    if any(v["error"] for v in stats.values()):
+        L += ["**INCOMPLETE: a source failed. Say so when summarising.**", ""]
+    for note in PARTIAL:
+        L += [f"**Coverage caveat: {note}**", ""]
+    for tier, (label, _) in sorted(TIERS.items(), key=lambda kv: kv[1][1]):
+        grp = [i for i in items if i["tier"] == tier]
+        if not grp:
+            continue
+        L += [f"## {label}  ({len(grp)})", ""]
+        for it in grp:
+            L.append(f"- **[{TIER_TAG.get(tier, tier)}]** {it['title']}")
+            L.append(f"  {(it.get('date') or '').strip()}  |  {(it.get('venue') or '')[:70]}"
+                     f"  |  <{it.get('url') or 'NO URL - uncitable'}>")
+        L.append("")
+    return chr(10).join(L)
+
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -312,6 +343,8 @@ def main() -> int:
     ap.add_argument("--sources", default="pubmed,trials,preprints")
     ap.add_argument("--preprint-budget", type=float, default=90.0,
                     help="seconds to spend scanning preprint servers (they are slow)")
+    ap.add_argument("--show", type=int, default=None,
+                    help="print this many titles to the console (default: all)")
     ap.add_argument("--out", default=None, help="digest path (default research-watch/<date>-<slug>.md)")
     a = ap.parse_args()
 
@@ -351,13 +384,26 @@ def main() -> int:
     os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
         f.write(render(ranked, query, a.days, stats, dropped))
+    idx = (out[:-3] if out.endswith(".md") else out) + ".index.md"
+    with open(idx, "w", encoding="utf-8") as f:
+        f.write(render_index(ranked, query, a.days, stats))
 
     print(f"\n{len(ranked)} distinct item(s), {dropped} duplicate(s) merged")
     for tier, (label, _) in sorted(TIERS.items(), key=lambda kv: kv[1][1]):
         n = sum(1 for i in ranked if i["tier"] == tier)
         if n:
             print(f"  {n:3d}  {label}")
-    print(f"\nDigest: {out}")
+    # Print the titles with their tiers. Deliberate: one command then gives everything
+    # needed to summarise, with no file read at all in the common case.
+    n_show = len(ranked) if a.show is None else a.show
+    if n_show:
+        print()
+        for it in ranked[:n_show]:
+            tag = TIER_TAG.get(it['tier'], it['tier'])
+            when = (it.get('date') or '')[:8]
+            print(f"  [{tag:13s}] {when:>8s}  {it[chr(39)+chr(39)] if False else it['title'][:94]}")
+    print(f"\nIndex  (read this one): {idx}")
+    print(f"Full digest (abstracts): {out}")
     if any(s["error"] for s in stats.values()):
         print("NOTE: at least one source failed. The digest says so at the top.")
     for note in PARTIAL:

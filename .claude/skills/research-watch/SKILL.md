@@ -37,6 +37,23 @@ python .claude/skills/research-watch/scripts/research_watch.py "ALS neurofilamen
 | `--max N` | cap per source (default 25) |
 | `--sources` | `pubmed,trials,preprints` — any subset, comma-separated |
 | `--out PATH` | digest path (default `research-watch/<date>-<slug>.md`) |
+| `--show N` | print only N titles to the console (default: all of them) |
+
+**It is a standalone module, and that is the point.** It is plain Python with no external
+dependencies and no API keys, so all the fetching, de-duplication, ranking and tier-labelling
+happens deterministically in one command. You are not paying tokens for the work, only for
+reading the result.
+
+**Read the console output first; it is usually enough.** Every run prints each item with its
+tier tag, so a single command gives you what you need to summarise without opening any file.
+Two files are written:
+
+- **`<name>.index.md`** — one line per item, no abstracts. Read **this** one when you need the
+  file. Roughly a fifth the size of the full digest.
+- **`<name>.md`** — the full digest with abstracts. Open it only for the specific items a
+  researcher actually asks about.
+
+Do not read the full digest to write a summary. Use the console output, or the index.
 
 Set `ALS_WATCH_CONTACT` to the researcher's email so the tool identifies itself politely to
 NCBI and the other endpoints. No source needs an API key.
