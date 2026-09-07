@@ -1,0 +1,76 @@
+# Fast-forward every researchers/* branch whenever main moves.
+#
+# WHY. Shared rules, skills and commands land on main. Each researcher branch is created from
+# main and then sits still, so a fresh clone that checks out a researcher branch starts at
+# whatever main looked like on the day the branch was made. The maintainer was doing this by
+# hand after every push, which is exactly the kind of chore that gets forgotten.
+#
+# WHAT IT WILL NOT DO. Only a true fast-forward. If a researcher has pushed their own work,
+# their branch has diverged and is left completely alone: this never merges, never rebases and
+# never force-pushes into anyone's branch. A diverged branch is not a problem to fix here,
+# because the SessionStart hook in .claude/settings.json merges origin/main into whatever
+# branch the researcher is on, locally, at the start of every session. That is the mechanism
+# that actually keeps them current. This job only saves a fresh checkout from starting stale.
+
+name: Sync researcher branches
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-researcher-branches
+  cancel-in-progress: false
+
+jobs:
+  fast-forward:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fast-forward each researchers/* branch to main
+        run: |
+          set -euo pipefail
+          git config user.name  "als-team-bot"
+          git config user.email "als-team-bot@users.noreply.github.com"
+
+          MAIN=$(git rev-parse origin/main)
+          echo "main is at ${MAIN}"
+          ff=0; skipped=0; already=0
+
+          for ref in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin/researchers); do
+            branch="${ref#origin/}"
+            sha=$(git rev-parse "$ref")
+
+            if [ "$sha" = "$MAIN" ]; then
+              echo "  = ${branch} already at main"
+              already=$((already+1))
+              continue
+            fi
+
+            # Fast-forward only: main must contain this branch's tip.
+            if git merge-base --is-ancestor "$sha" "$MAIN"; then
+              if git push origin "${MAIN}:refs/heads/${branch}"; then
+                echo "  + ${branch} fast-forwarded ${sha:0:7} -> ${MAIN:0:7}"
+                ff=$((ff+1))
+              else
+                echo "  ! ${branch} push refused (a ruleset, most likely). Left as-is."
+                skipped=$((skipped+1))
+              fi
+            else
+              ahead=$(git rev-list --count "${MAIN}..${sha}")
+              echo "  - ${branch} has ${ahead} commit(s) of its own. LEFT ALONE ON PURPOSE:"
+              echo "      their session hook merges origin/main locally, so they stay current"
+              echo "      without anything here touching their work."
+              skipped=$((skipped+1))
+            fi
+          done
+
+          echo ""
+          echo "fast-forwarded ${ff}, already current ${already}, left alone ${skipped}"

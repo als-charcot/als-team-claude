@@ -8,11 +8,15 @@ could not have seen anything", and that distinction is the entire point of the e
 that is not marked `CONFIRMED` with a real source. That refusal is deliberate: a margin
 chosen after seeing the data is not a margin, it is a rationalisation.
 
-## Every row below ships as NEEDS-CITATION on purpose
+## Status of each row
 
-The values are the ones commonly used as anchors in ALS work, and the reasoning for each is
-given. **But they arrived here without verified provenance, so none of them is usable yet.**
-Filling in the source is a clinical judgement for this team, not something to be assumed.
+`alsfrs_slope` is **CONFIRMED** as a recorded team decision (2026-09-07), so the tool runs for
+it. Everything else still ships as `NEEDS-CITATION`: the values are anchors commonly used in
+ALS work, but they arrived without verified provenance, and filling that in is a clinical
+judgement for this team rather than something to be assumed.
+
+A team decision *is* valid provenance, as long as it is written down with a date and a name,
+which is what the confirmed row does. What is not valid is a number with no stated origin.
 
 **To confirm a row:** replace `NEEDS-CITATION` with `CONFIRMED`, and replace the citation
 field with the actual source — a paper, a trial's powering assumption, or a written team
@@ -23,7 +27,7 @@ Keep the table format exactly as-is; the parser reads the pipe-delimited columns
 
 | key | scale | delta_star | direction | status | citation |
 |---|---|---|---|---|---|
-| alsfrs_slope | points/month (ALSFRS-R, 0-48) | 0.30 | lower is worse | NEEDS-CITATION | anchor: a third of a point per month is roughly the difference trials have been powered to detect over 6-12 months |
+| alsfrs_slope | points/month (ALSFRS-R, 0-48) | 0.30 | lower is worse | CONFIRMED | team decision 2026-09-07 (E. Mompi): 0.30 pts/month is the smallest change in decline rate the team would act on. Approx. the difference ALS trials have been powered to detect over 6-12 months. Revisit with the clinical members. |
 | alsfrs_total_change | points (ALSFRS-R, 0-48) | 2.0 | lower is worse | NEEDS-CITATION | anchor: commonly treated as the minimum clinically important difference on the 48-point scale |
 | alsfrs_slope_40pt | points/month (old ALSFRS, 0-40) | 0.25 | lower is worse | NEEDS-CITATION | the 40-point and 48-point scales are NOT interchangeable; needs its own margin |
 | fvc_pct_slope | % predicted/month | 1.0 | lower is worse | NEEDS-CITATION | anchor: respiratory decline rate used in trial powering |

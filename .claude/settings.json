@@ -1,5 +1,5 @@
 {
-  "_comment": "Team settings. The SessionStart hook keeps each researcher's CLAUDE.md, skills and shared findings current. Researchers work on their own branch (researchers/<name>), but shared updates land on main -- so a plain 'git pull' would pull only their own branch and they would silently drift. This fetches and merges origin/main into whatever branch they are on. If the merge cannot be done cleanly it aborts, leaving the working tree untouched rather than dropping conflict markers in front of a non-coder; the team-sync skill then resolves it with Claude watching. Requires this folder to be a git clone; for ZIP downloads the fetch fails and nothing happens. --prune drops remote-tracking refs for branches that no longer exist, so a branch renamed on the remote shows up as [gone] in 'git branch -vv' instead of looking healthy.",
+  "_comment": "Team settings. The SessionStart hook keeps each researcher's CLAUDE.md, skills and shared findings current. Researchers work on their own branch (researchers/<name>), but shared updates land on main -- so a plain 'git pull' would pull only their own branch and they would silently drift. This fetches and merges origin/main into whatever branch they are on. If the merge cannot be done cleanly it aborts, leaving the working tree untouched rather than dropping conflict markers in front of a non-coder; the team-sync skill then resolves it with Claude watching. Requires this folder to be a git clone; for ZIP downloads the fetch fails and nothing happens. --prune drops remote-tracking refs for branches that no longer exist, so a branch renamed on the remote shows up as [gone] in 'git branch -vv' instead of looking healthy. A second hook runs scripts/check_my_branch.py, which is silent when the clone is healthy and otherwise prints exactly what is wrong: sitting on a protected branch, a branch that tracks nothing, a branch whose remote counterpart was renamed away, or a missing repo-local identity. It never blocks.",
   "hooks": {
     "SessionStart": [
       {
@@ -7,6 +7,10 @@
           {
             "type": "command",
             "command": "git fetch origin --prune --quiet && (git merge --no-edit --quiet origin/main || git merge --abort) ; true"
+          },
+          {
+            "type": "command",
+            "command": "python scripts/check_my_branch.py 2>/dev/null || true"
           }
         ]
       }
