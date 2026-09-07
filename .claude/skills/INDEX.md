@@ -33,6 +33,15 @@ is the core you'll use most.
   execute (parallel agents) → stress-test with independent adversarial agents → polished
   PDF + hypothesis-log entry. Just say "start a sprint on <question>". See
   `templates/SPRINT_TEMPLATE.md`.
+- ⭐ **research-watch** — what is new in ALS outside PRO-ACT. Ask "anything new on
+  C9orf72?" and Claude searches the sources the team validated (PubMed, ClinicalTrials.gov,
+  bioRxiv/medRxiv so far), then writes a digest where **every item is labelled by evidence
+  tier** — a preprint is marked not peer reviewed, a trial registration is marked a plan
+  rather than a result. See `references/sources.md` for the full source registry.
+- ⭐ **adversarial-review** — the quality gate. Before any finding is shared it is audited
+  against what the script actually computed: numbers tied to pipeline output
+  (`claim_audit.py`), independent reviewers on four failure lenses, a PRO-ACT failure
+  catalogue, and a permutation negative control (`mutation_check.py`). Say "red-team this".
 - ⭐ **share-work** — how your finished work reaches the team. Say "share this work with the
   team" and Claude promotes the deliverable into `findings/<you>/<slug>/`, appends your
   `HYPOTHESIS_LOG.md` entry, and pushes to your own branch. Never touches `main`/`develop`,

@@ -52,7 +52,15 @@ get others' updates.
 2. **Observational data confirms patterns; it does not prove mechanisms.**
    Distinguish "X correlates with Y" from "X causes Y." Hedge mechanism claims that
    rest on cohort data accordingly.
-3. **Run the methodology-pitfall checklist** (`references/methodology_pitfalls.md`)
+3. **The adversarial review closes every experiment, and no finding is shared unchallenged.**
+   Run the **adversarial-review** skill as the **final stage of the analysis itself**, before
+   the researcher decides whether the result is worth sharing: numbers tied to what the
+   script computed, independent reviewers with separate context on the confounding /
+   survivorship / statistics / reproducibility lenses, and a permutation negative control on
+   the headline effect. `share-work` enforces it again at the share boundary as a backstop.
+   Fix the script, never the sentence. Record withdrawn claims with the mechanism that
+   defeated them.
+4. **Run the methodology-pitfall checklist** (`references/methodology_pitfalls.md`)
    against any cohort finding before accepting it.
 
 ## Report structure (every deliverable)
@@ -177,6 +185,20 @@ confirm it with them before acting.
 - repo-root `scripts/` and `outputs/` — shared/example material only, not personal work.
 - `templates/` — report and hypothesis-log templates.
 - `references/` — shared reference docs (methodology pitfalls, etc.).
+
+## Outside research (not PRO-ACT)
+
+- When the user asks what is new, recent or published on a topic, or whether an outside
+  claim holds up, use the **research-watch** skill. It only queries sources the team has
+  validated (`.claude/skills/research-watch/references/sources.md`).
+- **Always state the evidence tier before the claim.** A preprint is not peer reviewed, a
+  trial registration is a plan rather than a result, a press release is the company's own
+  account. Never flatten these into "studies show".
+- **An outside claim is a hypothesis, not a finding.** If it looks testable in PRO-ACT, run
+  the prior-art check, register it as Under analysis with the outside claim recorded as the
+  motivation, then treat it as a normal experiment with the adversarial review at the end.
+- If a source in a digest failed, say the digest is incomplete rather than presenting what
+  arrived as the whole picture.
 
 ## Skills
 

@@ -1,6 +1,6 @@
 # Sprint — <short title>
 
-**Researcher:** <name>  ·  **Branch:** `researchers/<name>`  ·  **Started:** <date>  ·  **Time-box:** <1 day / 1 week>
+**Researcher:** <name>  ·  **Branch:** `researchers/<github-username>`  ·  **Started:** <date>  ·  **Time-box:** <1 day / 1 week>
 
 ## 1. Frame
 - **Question (plain English):**
