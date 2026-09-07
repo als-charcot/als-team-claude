@@ -53,7 +53,11 @@ isn't deleted or rewritten. Its history is the record of your work.
 
 - `main` and `develop` are **protected**. You never push to them. The maintainer merges
   work upward into `develop` when the team should build on it.
-- You never push to anyone else's branch, and nobody pushes to yours.
+- You never push to anyone else's branch, and nobody pushes to yours. To be precise about
+  what enforces that: `main` and `develop` are protected by repository rules, and **no**
+  branch can be force-pushed or deleted. Staying on your own branch is a team convention
+  rather than something GitHub blocks, so it holds because the tooling always targets your
+  branch, not because a push elsewhere would be refused.
 - **We don't use pull requests.** You push to your own branch; that's it.
 
 Where the work lives:

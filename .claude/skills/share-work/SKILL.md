@@ -75,8 +75,17 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    going further.
 
 7. **Commit and push to their branch:**
-   - Make sure their branch exists and is checked out: `researchers/<name>`
-     (create it from the current `main` if it doesn't exist yet).
+   - **Confirm the branch against the remote before pushing anything.** Run
+     `git ls-remote --heads origin "refs/heads/researchers/*"` and check that the branch you
+     are about to push to appears in that list, and that it matches the current branch's
+     upstream. Branches are pre-created for every researcher, so a name that is missing from
+     the remote list means something is wrong, not that a branch needs inventing.
+   - **Never create a remote branch here to make a push succeed.** If the current branch has
+     no upstream, or its upstream is gone (`git branch -vv` shows `[gone]`, or `git pull`
+     says "no such ref was fetched"), apply the repair in CLAUDE.md under "Knowing which
+     researcher you're working with" and then push. In particular, if git suggests
+     `git push origin HEAD:<old-name>`, **do not run it** — that recreates a retired branch
+     name for the whole team.
    - Stage **only** `findings/<name>/<slug>/` and `HYPOTHESIS_LOG.md`.
    - Commit with a clear message: what was found, in one line, plus a short body.
    - Push: `git push -u origin researchers/<name>`.

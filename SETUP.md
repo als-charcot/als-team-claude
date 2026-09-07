@@ -42,8 +42,12 @@ git config --global core.longpaths true
 ```
 
 If a clone ever reports that it could not create a file, or `git status` shows large numbers
-of files as deleted while they clearly exist on disk, this is the cause. Re-clone into a
-shorter path (e.g. `C:\ALS`) after setting the flag.
+of files as deleted while they clearly exist on disk, this is the cause.
+
+If a re-clone into a shorter path (e.g. `C:\ALS`) turns out to be necessary, **copy `data/`
+and `projects/` across by hand first.** Both are git-ignored, so they do **not** come down
+with a clone: a fresh clone would leave the researcher without their PRO-ACT download and
+without any local experiment work. Never re-clone over a folder that already has work in it.
 
 ## 2. Create the standard folders (idempotent — never overwrite)
 - Ensure `data/` and `projects/` exist at the repo root; create them only if missing.
@@ -52,8 +56,11 @@ shorter path (e.g. `C:\ALS`) after setting the flag.
   rather than making a new one.
 
 ## 3. Their own branch: `researchers/<name>` (you do this, with git)
-- Ask their first name **once** if you don't know it yet (`git config user.name` may already
-  tell you); the branch is named after their **GitHub username**, which is globally unique, so there is never a collision: username `heleneblasco` → branch `researchers/heleneblasco`. Ask for the username if the branch does not already tell you.
+- Ask their first name **once** if you don't know it yet. Check with
+  **`git config --local user.name`** (scoped to this clone) rather than bare
+  `git config user.name`, which falls back to the machine's **global** identity. That global
+  value is often an unrelated work identity, and CLAUDE.md forbids deriving a researcher's
+  identity from it. If the local value is unset, ask; do not inherit the global one. the branch is named after their **GitHub username**, which is globally unique, so there is never a collision: username `heleneblasco` → branch `researchers/heleneblasco`. Ask for the username if the branch does not already tell you.
 - **Persist the identity in the clone** so no future session ever asks again: set the
   repo-local `git config user.name "<Name>"`, and `git config user.email "<email>"` with
   the email address they use on GitHub (this is what links their commits to their account).
