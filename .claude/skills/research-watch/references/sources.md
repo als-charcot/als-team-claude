@@ -12,13 +12,15 @@ or registered API key · `SCRAPE` no API, would need HTML parsing or an agent ·
 
 ---
 
-## Live now (3 sources, 3 evidence tiers)
+## Live now (5 sources, 4 evidence tiers)
 
 | Source | Tier assigned | Status | Notes |
 |---|---|---|---|
 | **PubMed / MEDLINE** | peer-reviewed | `LIVE` | E-utilities. FG's first approval. Real keyword search, date-windowed. |
 | **ClinicalTrials.gov** | trial registration | `LIVE` | API v2, sorted newest-update-first. A registration is a plan or a status change, never a result. |
 | **bioRxiv + medRxiv** | preprint, NOT peer reviewed | `LIVE` | See the coverage caveat below. |
+| **openFDA (drug labels)** | regulatory record | `LIVE` | Free, no key. A label is a regulatory fact, not evidence of effectiveness, so it carries its own tier. 404s on zero matches, handled. |
+| **Crossref** | peer-reviewed | `LIVE (opt-in)` | Works, but its relevance ranking fails on short queries: "ALS neurofilament" returned German papers about museums, because *als* is a German word. Post-filtered on term presence, which kills the noise but leaves it near-silent since Crossref often has no abstract. Off by default. |
 
 **The bioRxiv/medRxiv caveat, because it shapes what the tool can promise.** Their API is
 **date-range only**. Passing a `search=` parameter returns exactly the same payload, which
@@ -36,9 +38,8 @@ less.
 | Source | Tier | Status | Why it is next |
 |---|---|---|---|
 | **OpenAlex** | peer-reviewed + preprint | `QUERY` | Free, no key, excellent search, marks preprints. **Unreachable from the maintainer's machine** (connection failed on repeated attempts) — needs a network check before committing to it. |
-| **Crossref** | peer-reviewed | `READY` | Free, no key. Best for DOI resolution and for linking news back to a paper. |
 | **WHO ICTRP, EU CTIS, ISRCTN, ANZCTR, jRCT, UMIN, ChiCTR** | trial registration | `READY` | Approved. Non-US trials are genuinely missed by ClinicalTrials.gov alone. ICTRP first, since it aggregates several. |
-| **FDA (openFDA)** | regulatory | `READY` | Free API. Approvals, designations, safety communications. |
+| **FDA (openFDA) other endpoints** | regulatory | `READY` | The label endpoint is live. Approvals, designations and safety communications sit on other openFDA endpoints and are not wired yet. |
 | **EMA, MHRA, Health Canada, PMDA** | regulatory | `SCRAPE` | Approved, but no clean public API. Needs feeds or fetched pages. |
 | **NIH RePORTER** | funding | `READY` | Free API. New grants are an early signal of where work is heading. |
 | **CORDIS, UKRI, Wellcome** | funding | `READY`/`SCRAPE` | Approved. |

@@ -60,11 +60,22 @@ NCBI and the other endpoints. No source needs an API key.
 
 **Live sources, and the tier each one carries:**
 
-| Source | Tier |
-|---|---|
-| PubMed / MEDLINE | peer-reviewed publication |
-| ClinicalTrials.gov | trial registration, a plan or status change, **not a result** |
-| bioRxiv + medRxiv | **preprint, not peer reviewed** |
+| Source | Tier | Default |
+|---|---|---|
+| PubMed / MEDLINE | peer-reviewed publication | yes |
+| ClinicalTrials.gov | trial registration, a plan or status change, **not a result** | yes |
+| bioRxiv + medRxiv | **preprint, not peer reviewed** | yes |
+| openFDA drug labels | **regulatory record**, a label or decision, not a study result | yes |
+| Crossref | peer-reviewed publication | **no, opt-in** |
+
+**Why Crossref is opt-in rather than default.** Its relevance ranking is not reliable for
+these queries. A search for "ALS neurofilament" returned German-language papers about museums
+and archives, because *als* is an ordinary German word. It now post-filters so every query
+term must actually appear, which removes the noise but leaves it returning nothing for most
+searches, since Crossref frequently carries no abstract to match against. A source that
+usually returns nothing while looking like coverage is worse than one nobody switched on, so
+it is off by default. Add `--sources ...,crossref` when you want full-phrase journal coverage,
+and it stays useful for resolving a DOI when linking news back to a paper.
 
 The full registry of every validated source, what is wired up, what is next, and what is
 blocked and why: **`references/sources.md`**. Do not add a source that is not approved

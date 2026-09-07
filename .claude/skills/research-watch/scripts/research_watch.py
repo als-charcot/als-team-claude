@@ -14,6 +14,8 @@ SOURCES IMPLEMENTED (all validated by the team, all free, none needs an API key)
   pubmed      PubMed / MEDLINE            -> tier: peer-reviewed
   trials      ClinicalTrials.gov (API v2) -> tier: trial registration
   preprints   bioRxiv + medRxiv           -> tier: preprint, NOT peer reviewed
+  crossref    Crossref (opt-in, weak here) -> tier: peer-reviewed
+  fda         openFDA drug labels         -> tier: regulatory
 
 Each adapter reports its own item count, and a source that returns zero says so out loud.
 A source that errors is reported as an error, never silently dropped: a harvester that
@@ -42,15 +44,17 @@ PARTIAL: list[str] = []
 TIERS = {
     "peer-reviewed":      ("Peer-reviewed publication", 0),
     "trial":              ("Trial registration (a plan or status change, not a result)", 1),
-    "preprint":           ("PREPRINT - NOT PEER REVIEWED", 2),
-    "conference":         ("Conference abstract - not equivalent to a full publication", 3),
-    "press-release":      ("COMPANY-PROVIDED information", 4),
-    "patent":             ("Patent - not evidence of clinical effectiveness", 5),
-    "news":               ("Secondary news coverage", 6),
+    "regulatory":         ("Regulatory record (a label or decision, not a study result)", 2),
+    "preprint":           ("PREPRINT - NOT PEER REVIEWED", 3),
+    "conference":         ("Conference abstract - not equivalent to a full publication", 4),
+    "press-release":      ("COMPANY-PROVIDED information", 5),
+    "patent":             ("Patent - not evidence of clinical effectiveness", 6),
+    "news":               ("Secondary news coverage", 7),
 }
 
 
 TIER_TAG = {"peer-reviewed": "PEER-REVIEWED", "trial": "TRIAL-REG",
+            "regulatory": "REGULATORY",
             "preprint": "PREPRINT", "conference": "CONF-ABSTRACT",
             "press-release": "COMPANY-PR", "patent": "PATENT", "news": "NEWS"}
 
@@ -221,7 +225,87 @@ def fetch_preprints(query: str, days: int, cap: int,
     return out[:cap]
 
 
-ADAPTERS = {"pubmed": fetch_pubmed, "trials": fetch_trials, "preprints": fetch_preprints}
+def fetch_crossref(query: str, days: int, cap: int) -> list[dict]:
+    """Crossref. Tier: peer-reviewed. Broader journal coverage than PubMed alone, and it is
+    the route that resolves a DOI, so it is what links secondary news back to a real paper."""
+    since = (date.today() - timedelta(days=days)).isoformat()
+    # query.bibliographic is tighter than the loose `query`, and we still post-filter below.
+    # Learned the hard way: a bare query for "ALS neurofilament" returned German-language
+    # papers about museums and archives, because "als" is an ordinary German word. A source
+    # that returns confident nonsense is worse than one that returns nothing.
+    url = ("https://api.crossref.org/works"
+           f"?query.bibliographic={urllib.parse.quote(query)}"
+           f"&filter=from-online-pub-date:{since},type:journal-article"
+           f"&rows={cap}&sort=published&order=desc"
+           f"&mailto={urllib.parse.quote(CONTACT)}")
+    items = (json.loads(get(url)).get("message") or {}).get("items", []) or []
+    terms = [t.lower() for t in re.split(r"\s+", query) if len(t) > 2]
+    out = []
+    for it in items:
+        doi = (it.get("DOI") or "").strip()
+        title = " ".join((it.get("title") or [""])[0].split())
+        if not title:
+            continue
+        # Require every term to actually appear. Crossref relevance ranking alone is not
+        # enough for a query whose tokens are common words in another language.
+        blob = f"{title} {' '.join(it.get('subject') or [])} {(it.get('abstract') or '')}".lower()
+        if terms and not all(t in blob for t in terms):
+            continue
+        parts = ((it.get("published-online") or it.get("published-print")
+                  or it.get("created") or {}).get("date-parts") or [[]])[0]
+        when = "-".join(f"{p:02d}" if i else str(p) for i, p in enumerate(parts))
+        auth = [f"{a.get('family','')} {(a.get('given') or '')[:1]}".strip()
+                for a in (it.get("author") or [])[:4]]
+        out.append(dict(
+            tier="peer-reviewed", source="Crossref", id=f"doi:{doi}", doi=doi,
+            title=title, date=when, authors=[a for a in auth if a],
+            summary=" ".join((it.get("abstract") or "")
+                             .replace("<jats:p>", "").replace("</jats:p>", "").split()),
+            url=f"https://doi.org/{doi}" if doi else "",
+            venue=" | ".join(x for x in [(it.get("container-title") or [""])[0],
+                                         it.get("publisher", "")] if x)[:80]))
+    return out
+
+
+def fetch_fda(query: str, days: int, cap: int) -> list[dict]:
+    """openFDA drug label endpoint. Tier: regulatory.
+
+    A label change is a regulatory fact, not a study result, and it gets its own tier so it
+    can never be read as evidence of effectiveness. Searches labels mentioning the query
+    alongside ALS terms.
+    """
+    terms = " AND ".join(f'"{t}"' for t in re.split(r"\s+", query.strip()) if len(t) > 2)
+    search = (f'(indications_and_usage:({terms}) OR description:({terms}))'
+              if terms else 'indications_and_usage:"amyotrophic lateral sclerosis"')
+    url = ("https://api.fda.gov/drug/label.json"
+           f"?search={urllib.parse.quote(search)}&limit={min(cap, 25)}")
+    try:
+        payload = json.loads(get(url))
+    except Exception as e:                                  # noqa: BLE001
+        if "HTTP Error 404" in str(e):
+            return []                                       # openFDA 404s on zero matches
+        raise
+    out = []
+    for r in payload.get("results", []) or []:
+        o = (r.get("openfda") or {})
+        name = (o.get("brand_name") or o.get("generic_name") or ["(unnamed product)"])[0]
+        eff = (r.get("effective_time") or "")
+        when = f"{eff[0:4]}-{eff[4:6]}-{eff[6:8]}" if len(eff) == 8 else eff
+        ind = " ".join(" ".join(r.get("indications_and_usage") or []).split())
+        sid = r.get("id") or (o.get("spl_set_id") or [""])[0]
+        out.append(dict(
+            tier="regulatory", source="openFDA (drug label)", id=f"spl:{sid}", doi="",
+            title=f"Label: {name}", date=when, authors=[],
+            summary=ind,
+            url=(f"https://labels.fda.gov/{sid}" if sid else ""),
+            venue=" | ".join(x for x in [
+                (o.get("manufacturer_name") or [""])[0],
+                (o.get("route") or [""])[0]] if x)[:80]))
+    return out
+
+
+ADAPTERS = {"pubmed": fetch_pubmed, "trials": fetch_trials, "preprints": fetch_preprints,
+            "crossref": fetch_crossref, "fda": fetch_fda}
 
 
 # ─────────────────────────── dedupe / rank / render ──────────────────────────
@@ -340,7 +424,8 @@ def main() -> int:
     ap.add_argument("query", nargs="+", help="keywords, e.g. \"ALS neurofilament\"")
     ap.add_argument("--days", type=int, default=30)
     ap.add_argument("--max", type=int, default=25, help="cap per source")
-    ap.add_argument("--sources", default="pubmed,trials,preprints")
+    ap.add_argument("--sources", default="pubmed,trials,preprints,fda",
+                    help="crossref is available but NOT default; see SKILL.md")
     ap.add_argument("--preprint-budget", type=float, default=90.0,
                     help="seconds to spend scanning preprint servers (they are slow)")
     ap.add_argument("--show", type=int, default=None,
