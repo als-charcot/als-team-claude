@@ -57,8 +57,29 @@ shorter path (e.g. `C:\ALS`) after setting the flag.
 - **Persist the identity in the clone** so no future session ever asks again: set the
   repo-local `git config user.name "<Name>"`, and `git config user.email "<email>"` with
   the email address they use on GitHub (this is what links their commits to their account).
-- Create the branch from `main` if it doesn't exist yet, otherwise just check it out:
-  `researchers/<name>`. Keep them on that branch.
+- **Check the remote branch list FIRST, and match against it.** Their branch has almost
+  certainly been created for them already. Run:
+
+  ```
+  git ls-remote --heads origin "refs/heads/researchers/*"
+  ```
+
+  - **If their username appears in that list, check it out plainly:**
+    `git checkout researchers/<github-username>`. A plain checkout of an existing remote
+    branch sets up upstream tracking automatically, which is what makes `git pull` and
+    `git push` work with no arguments later.
+  - **Do NOT use `git checkout -b`** when the branch already exists on the remote. That
+    creates a *local* branch with **no upstream**, and their next `git pull` fails with
+    "There is no tracking information for the current branch." Verified behaviour, not a
+    guess.
+  - **If their username does NOT appear in that list, stop and check before creating
+    anything.** Show them the list and ask which one is theirs. The usual cause is that they
+    gave a display name rather than their GitHub username (for example "Helene" instead of
+    `heleneblasco`), and creating `researchers/Helene` would give them a branch that exists
+    only on their machine, tracks nothing, and pushes nowhere useful. Only create a new
+    branch from `main` once you are sure the username is right and no branch exists for it.
+
+  Keep them on that branch.
 - **Immediately sync the branch from `main`:** `git fetch origin` then
   `git merge --no-edit origin/main`. A pre-created branch may lag `main`, and until this
   merge the working tree (including this very file) can be stale. **Re-read SETUP.md after

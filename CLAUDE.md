@@ -155,6 +155,15 @@ rather than asking. In priority order:
 2. **The current branch:** `researchers/<github-username>` identifies them.
 3. **Their folder:** a single `projects/<name>/` directory.
 
+**If the current branch has no upstream, or its upstream is gone, fix that before any push.**
+Symptom: `git pull` says *"no tracking information"* or *"no such ref was fetched"*. Cause:
+either the branch was created locally with `checkout -b` instead of checked out from the
+remote, or it is an old branch name that has since been renamed on the remote. Repair with
+`git fetch origin --prune`, then either `git branch --set-upstream-to=origin/researchers/<username>`
+or, if the local name is stale, `git branch -m <old> researchers/<username>` first. Never
+work around it by pushing the local name to a new remote branch, because that resurrects a
+retired branch name for the whole team.
+
 Only if none of these exist: **ask once**. And regardless of *how* you learned the name —
 asked, or derived from the branch or folder — **make sure it is persisted**: if the
 repo-local `git config user.name` is unset, set it, and if `user.email` is unset, ask once
