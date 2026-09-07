@@ -14,5 +14,7 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Research-watch digests: local until deliberately promoted via share-work
-research-watch/
+# Research-watch digests: local until deliberately promoted via share-work.
+# LEADING SLASH IS LOAD-BEARING: an unanchored 'research-watch/' also matches
+# .claude/skills/research-watch/ and silently excluded the whole skill from a commit.
+/research-watch/
