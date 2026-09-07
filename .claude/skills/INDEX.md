@@ -38,6 +38,11 @@ is the core you'll use most.
   bioRxiv/medRxiv so far), then writes a digest where **every item is labelled by evidence
   tier** — a preprint is marked not peer reviewed, a trial registration is marked a plan
   rather than a result. See `references/sources.md` for the full source registry.
+- ⭐ **expand-findings** — the counterpart to adversarial-review. That one attacks a claim;
+  this one rescues a lead the conservative defaults discarded. Says what the data could
+  actually see (so an underpowered null stops being read as "nothing there"), and re-runs
+  the analysis across every defensible version of its arbitrary choices. Ask "what if we
+  relaxed some of this?". Output is **leads** in `LEADS.md`, never findings.
 - ⭐ **adversarial-review** — the quality gate. Before any finding is shared it is audited
   against what the script actually computed: numbers tied to pipeline output
   (`claim_audit.py`), independent reviewers on four failure lenses, a PRO-ACT failure

@@ -60,7 +60,14 @@ get others' updates.
    the headline effect. `share-work` enforces it again at the share boundary as a backstop.
    Fix the script, never the sentence. Record withdrawn claims with the mechanism that
    defeated them.
-4. **Run the methodology-pitfall checklist** (`references/methodology_pitfalls.md`)
+4. **A null is not a result until you say what the data could see.** `p > 0.05` in a cohort
+   this size usually means "we could not tell", not "there is nothing there". Use the
+   **expand-findings** skill to report the minimum detectable effect and the largest effect
+   still compatible, against a registered clinical margin. An adequately powered null is a
+   real finding; an underpowered one is a **lead**, which goes in `LEADS.md` and **never** in
+   `HYPOTHESIS_LOG.md`. Leads never count as prior art, and a lead is promoted to a
+   hypothesis only by evidence from data that did not generate it.
+5. **Run the methodology-pitfall checklist** (`references/methodology_pitfalls.md`)
    against any cohort finding before accepting it.
 
 ## Report structure (every deliverable)

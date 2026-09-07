@@ -46,6 +46,16 @@ throughout (effect sizes with p-values, hedge mechanism claims, save files not c
   design, no confounder adjustment, survivorship / healthy-user bias, multiple testing,
   observational→causal overreach). Keep only what survives.
 
+## Stage 4a — Widen before you close
+
+Run the **expand-findings** skill alongside the review, not instead of it. If the headline
+result is null or borderline, report what the data could actually see before calling it
+nothing. Then ask the question a researcher should always ask of a finished analysis: **what
+if we relaxed some of this?** Re-run across the defensible versions of the arbitrary choices
+and report the whole curve.
+
+Anything that comes out of this is a **lead** for `LEADS.md`, never a finding.
+
 ## Stage 4b — The review closes the experiment
 
 The adversarial review is the **last stage of the experiment**, not a step that belongs to
