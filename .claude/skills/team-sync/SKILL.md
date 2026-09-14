@@ -58,3 +58,21 @@ Scope the history to that window and summarise only those changes.
 - This is safe to run at the start of every session; it's the first of the three things
   researchers are asked to do.
 - Their own work is never uploaded by this skill — to share, use the **share-work** skill.
+
+## After syncing, check the lead register
+
+Shared rules and findings are only half of what changed. Run:
+
+```
+python scripts/leads.py due
+```
+
+Any lead listed there has not been looked at in a while. Report them to the researcher in
+plain language: what the open question is, and what would resolve it. **A lead is never
+deleted** — if it is still open, say so and record the re-check with
+`leads.py touch <id> --note "..."`, which pushes the next review out.
+
+If they have run **research-watch** recently, also run
+`python scripts/leads.py match <the digest's .index.md>`. That is how new literature gets
+connected to questions the team could not answer before. A keyword match is a prompt to
+look, never evidence: open the item and decide.

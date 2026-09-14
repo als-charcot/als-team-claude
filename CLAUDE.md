@@ -67,7 +67,12 @@ get others' updates.
    real finding; an underpowered one is a **lead**, which goes in `LEADS.md` and **never** in
    `HYPOTHESIS_LOG.md`. Leads never count as prior art, and a lead is promoted to a
    hypothesis only by evidence from data that did not generate it.
-5. **Run the methodology-pitfall checklist** (`references/methodology_pitfalls.md`)
+5. **Leads are followed, not filed.** Open questions go in the register (`scripts/leads.py`,
+   indexed in `LEADS.md`), organised by **what would unblock them** rather than by topic. A
+   lead is **never deleted** — it is resolved, superseded or parked, and it keeps its
+   history. Re-check what is due (`leads.py due`), and when new literature arrives connect it
+   to open questions (`leads.py match`). Leads never count as prior art.
+6. **Run the methodology-pitfall checklist** (`references/methodology_pitfalls.md`)
    against any cohort finding before accepting it.
 
 ## Report structure (every deliverable)

@@ -133,9 +133,33 @@ a false lead.
 
 ## Recording a lead
 
-Leads go in **`LEADS.md`** at the repo root, never in `HYPOTHESIS_LOG.md`. Format:
-`templates/LEAD_TEMPLATE.md`. Every lead carries an ID (`L-001`), a status, an **expiry
-date**, the analysable n, the number of contrasts screened, and what would resolve it.
+**Use the register tool, not a hand-edited file:**
+
+```
+python scripts/leads.py new \n    --title "..." \n    --waiting-on <what would unblock it> \n    --kind <what sort of lead> \n    --owner <username> --origin H-002 \n    --keywords "nfl,plasma,serum" \n    --resolves-when "..."
+```
+
+Leads live one-file-per-lead in `leads/`, and `LEADS.md` is a **generated index** (run
+`leads.py index`). Never hand-edit `LEADS.md`.
+
+**The `waiting_on` value is the most important field**, because it is the axis the whole
+register is organised by. It answers "what would have to change for this to become
+answerable?":
+
+| `waiting_on` | meaning |
+|---|---|
+| `more-data` | a bigger sample of the same kind would settle it |
+| `other-data` | needs a dataset we do not have |
+| `method` | the data is here; the right method has not been applied |
+| `external` | waiting on outside evidence: a paper, a trial readout, a release |
+| `decision` | blocked on a human decision or an access request |
+| `nothing` | actionable right now, nobody has picked it up |
+
+**Give it keywords.** They are what lets `leads.py match` connect new literature to this
+lead later. A lead with no keywords can never be surfaced automatically.
+
+Every lead carries an ID, a status, a **next-review date**, the analysable n where relevant,
+and what would resolve it.
 
 **Promotion is one-way and needs new evidence.** A lead becomes a hypothesis only when it is
 tested on data that was not used to generate it — a locked holdout, a different cohort, or a
