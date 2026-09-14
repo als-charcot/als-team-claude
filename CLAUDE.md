@@ -163,7 +163,11 @@ language**, then offer the allowed alternative (e.g. the PDF plus a static PNG).
 You start every session knowing nothing — the **clone carries the identity**, so derive it
 rather than asking. In priority order:
 
-1. **Repo-local git config:** `git config user.name` — set during setup; the authority.
+1. **Repo-local git config:** `git config --local user.name` — set during setup; the
+   authority. **The `--local` is load-bearing:** a bare `git config user.name` falls
+   through to the machine's global identity, which on a fresh clone is whatever work
+   account that machine happens to carry. If the value contains a space or a capital
+   letter it is a display name rather than a GitHub username, so stop and ask.
 2. **The current branch:** `researchers/<github-username>` identifies them.
 3. **Their folder:** a single `projects/<name>/` directory.
 

@@ -59,10 +59,15 @@ def main() -> int:
         problems.append(f"You are on '{branch}', which is protected. Work committed here "
                         f"cannot be pushed, and the push will be rejected.")
         if remotes:
-            fixes.append("Check out your own branch. The ones that exist are:\n      "
+            # Deliberately does NOT name a branch to check out. Naming one means naming
+            # whichever sorts first alphabetically, which is a colleague's branch, and a
+            # researcher who follows the suggestion lands in someone else's workspace.
+            fixes.append("Check out YOUR OWN branch, the one named after your GitHub "
+                         "username. The branches that exist are:\n      "
                          + "\n      ".join(sorted(remotes))
-                         + "\n    Use a plain checkout so tracking is set up automatically:\n"
-                         + f"      git checkout {sorted(remotes)[0]}")
+                         + "\n    Then:  git checkout researchers/<your-github-username>"
+                         "\n    Use a plain checkout, not -b, so tracking is set up for you."
+                         "\n    If yours is not in that list, stop and ask the maintainer.")
         else:
             fixes.append("Ask the maintainer (Emmanuel) which branch is yours.")
 

@@ -44,8 +44,9 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
    - Record anything withdrawn, with the mechanism that defeated it, under a
      **Withdrawn** heading in the finding's `README.md`.
    - Append the surviving verdicts to the `HYPOTHESIS_LOG.md` entry.
-   - If the researcher declines the review, say plainly that the finding will be shared
-     unchallenged and record that in the log entry.
+   - **The researcher cannot decline this.** `CLAUDE.md` lists it as non-negotiable, and a
+     non-coder waiving a review they have not seen is not an informed choice. If they are in
+     a hurry, offer to share it after the review rather than instead of it.
 
 3. **Confirm what's being shared.** Identify the deliverable in their project folder —
    normally the report PDF, the end-to-end script, and any key figures. Show the list and

@@ -13,7 +13,7 @@ propose the grid yourself: the inclusion filters, the outcome definition and the
 window are the usual suspects. Show the researcher the grid and get agreement BEFORE running,
 because a grid assembled after seeing the results is not a sensitivity analysis.
 
-Then run `scripts/relax.py`, report the **whole curve** with the original marked, and give the
+Then run `.claude/skills/expand-findings/scripts/relax.py`, report the **whole curve** with the original marked, and give the
 robustness verdict. Never name a best specification. If the result turns out to be
 choice-dependent, that dependency is the honest headline, and anything worth carrying forward
 is a **lead** for `LEADS.md`, not a finding.
