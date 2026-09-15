@@ -2,7 +2,10 @@
 name: team-sync
 description: >-
   Bring down the team's latest shared rules, skills and findings, and summarise what changed.
-  Use when the user says "pull the latest", "pull from the team repo", "sync with the team",
+  Use when the user starts a fresh session and needs to pick up where they left off:
+  "where did I get to", "what was I working on", "catch me up on my own work",
+  "remind me what I was doing", "pick up where I left off". Also when they say
+  "pull the latest", "pull from the team repo", "sync with the team",
   "what's new from the team", "what has everyone been working on" — and equally for casual
   phrasings that mean the same thing: "get the latest", "catch me up", "update my setup",
   "grab the newest version", "has anyone shared anything". Also use when they ask to catch
@@ -35,6 +38,39 @@ updates — new skills, rule changes, colleagues' findings — land on **`main`*
      they edited something they weren't expected to. Offer to keep the team's version, and
      if they're unsure, `git merge --abort` and tell them to ask the maintainer.
 4. Confirm what happened: how many commits came down, or "already up to date."
+
+## Then: where THEY left off
+
+A researcher starting a fresh conversation has no context, and neither do you. Before
+summarising the team's work, answer the question they actually care about: **what was I in
+the middle of?**
+
+You start knowing nothing, so read it off the repository rather than asking:
+
+1. **Who they are and where they are.** Repo-local `git config --local user.name` and the
+   current `researchers/<username>` branch. The session hook has already warned them if
+   either is wrong.
+
+2. **Questions they registered but have not closed.** Search `HYPOTHESIS_LOG.md` for entries
+   whose owner is them and whose **Status is "Under analysis"**. That is the strongest signal
+   of unfinished work: they told the team they were working on it and never posted a result.
+   Report the hypothesis, the date they registered it, and the planned data and method.
+
+3. **Their own working folders.** List `projects/<name>/` and report the most recently
+   modified experiment folders, with what is in them: a script, outputs, a draft report. This
+   is git-ignored and local, so it is the only place a half-finished analysis lives.
+
+4. **Their commits on their own branch**, newest first, so they can see what they last
+   shared and when.
+
+5. **Leads they own.** `python scripts/leads.py list --owner <username> --live`, plus
+   anything from `leads.py due` that is theirs.
+
+Then say, in plain language and in this order: **what is unfinished**, what is already
+shared, and what is waiting on them. Offer to resume the unfinished thing.
+
+**If nothing is unfinished, say so plainly** and offer the two questions on the register that
+are not blocked by anything. Do not invent work in progress to fill the silence.
 
 ## Then summarise what's new
 

@@ -193,7 +193,10 @@ machine's global git config (that may be a work identity).
 
 Researchers won't use git vocabulary. "Save this", "send it up", "back this up", "publish
 this" mean *promote, commit and push* — use **share-work**. "Get the latest", "what's new",
-"catch me up" mean *pull* — use **team-sync**. Work out which one they mean rather than
+"catch me up" mean *pull* — use **team-sync**. So does **"where did I get to"** or "what was
+I working on": a researcher opening a fresh conversation has no context and neither do you,
+so read it off the repository (their unclosed Under-analysis entries, their `projects/`
+folders, their branch commits, the leads they own) rather than asking them to remember. Work out which one they mean rather than
 asking for exact terminology, then say in one plain sentence what you're about to do and
 confirm it with them before acting.
 
