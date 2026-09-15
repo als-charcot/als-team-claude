@@ -24,6 +24,26 @@ tracked `findings/` folder and pushing it to **their own branch**. Nothing else 
 - Don't share half-finished work. If the analysis isn't complete, say so and offer to
   finish it first.
 
+## Registering a question before you run it
+
+This is a **separate, lighter flow** from sharing a finished finding, and it runs at the
+START of an experiment rather than the end. Use it when the researcher says they are about to
+test something, or when `CLAUDE.md`'s register-before-running rule fires.
+
+It exists because an entry written only to the local file is invisible: a colleague cannot see
+that the question is being worked on, which is the entire point of the claim board.
+
+1. Identify the researcher (step 1 below) and confirm their branch is correct.
+2. Append an entry to `HYPOTHESIS_LOG.md` with **Status: Under analysis**, the owner, the
+   date, the hypothesis, and the planned dataset, cohort and method. Leave the finding blank.
+3. Stage **only** `HYPOTHESIS_LOG.md`. Nothing else, and never anything from `data/`.
+4. Commit with a message beginning `register:` and push to `researchers/<username>`.
+5. Tell them in one sentence that the question is now visible to the team, and that the same
+   entry gets updated with the result rather than a second one being added.
+
+**Do not run the adversarial review for a registration.** There is nothing to review yet.
+The review gate applies to sharing a finding, which is the flow below.
+
 ## Steps
 
 1. **Identify the researcher** from the clone, in this order: repo-local

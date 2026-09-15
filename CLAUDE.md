@@ -262,8 +262,9 @@ hypothesis on new data or a new cohort is a genuine new contribution, not a dupl
 proceed differently. Duplicating a colleague's test unknowingly wastes a week; building on
 it is the whole point of the log.
 
-**Then register the intent before running.** Append an entry with **Status: Under analysis**
-(owner, date, hypothesis, planned data & inputs) and share it, so colleagues can see the
-question is being worked on *right now* — the log is a claim board, not just an archive.
+**Then register the intent before running.** Use the **share-work** skill's *registering a
+question* flow: it appends an entry with **Status: Under analysis** (owner, date, hypothesis,
+planned data & inputs), stages only `HYPOTHESIS_LOG.md`, and pushes it to the researcher's
+branch, so colleagues can see the question is being worked on *right now* — the log is a claim board, not just an archive.
 Update that same entry to Supported / Refuted / Inconclusive when the result lands, rather
 than adding a second one.
