@@ -29,6 +29,12 @@ same folders on either OS.
     `brew install git` if Homebrew is present. git is often already installed on macOS.
 - If this is **not** a clone (downloaded ZIP), updates come by re-downloading the ZIP; a
   clone is better for automatic updates — offer to set one up.
+- **Install the document converter:** `pip install "markitdown[pdf,docx,pptx,xlsx]"`. The
+  `PreToolUse` hook in `.claude/settings.json` uses it to turn a PDF, Word, PowerPoint or
+  Excel file into markdown before you read it, which costs a fraction of the tokens the
+  original would. **It fails open**, so if this install is skipped nothing breaks and
+  documents are simply read the expensive way. Do it anyway; it takes seconds. Verify with
+  `python -m markitdown --help`.
 
 ## 1b. Windows path-length insurance (cheap, do it once)
 

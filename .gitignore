@@ -18,3 +18,6 @@ Thumbs.db
 # LEADING SLASH IS LOAD-BEARING: an unanchored 'research-watch/' also matches
 # .claude/skills/research-watch/ and silently excluded the whole skill from a commit.
 /research-watch/
+
+# Markdown produced by the document-conversion hook. Derived, never shared.
+/.converted/

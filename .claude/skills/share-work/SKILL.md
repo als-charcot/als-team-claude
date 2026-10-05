@@ -36,9 +36,15 @@ that the question is being worked on, which is the entire point of the claim boa
 1. Identify the researcher (step 1 below) and confirm their branch is correct.
 2. Append an entry to `HYPOTHESIS_LOG.md` with **Status: Under analysis**, the owner, the
    date, the hypothesis, and the planned dataset, cohort and method. Leave the finding blank.
-3. Stage **only** `HYPOTHESIS_LOG.md`. Nothing else, and never anything from `data/`.
-4. Commit with a message beginning `register:` and push to `researchers/<username>`.
-5. Tell them in one sentence that the question is now visible to the team, and that the same
+3. **If the question came from a lead, move the lead at the same time:**
+   `python scripts/leads.py touch <id> --status under-test --owner <username>
+   --note "taken as H-0NN"`. Two records describe one piece of work, and a log entry that
+   says Under analysis beside a lead that still says `open` is a register that has started
+   lying. Do this in the same commit, never as a thing to tidy up later.
+4. Stage **only** `HYPOTHESIS_LOG.md`, and `leads/<id>.md` plus `LEADS.md` if step 3 applied.
+   Nothing else, and never anything from `data/`.
+5. Commit with a message beginning `register:` and push to `researchers/<username>`.
+6. Tell them in one sentence that the question is now visible to the team, and that the same
    entry gets updated with the result rather than a second one being added.
 
 **Do not run the adversarial review for a registration.** There is nothing to review yet.
@@ -89,6 +95,14 @@ The review gate applies to sharing a finding, which is the flow below.
    the test applies to their cohort. **If an "Under analysis" entry for this question
    already exists, update it in place** (status + finding) instead of appending a duplicate.
 
+5b. **Close the lead, if this finding came from one.** A lead left at `under-test` after the
+   work has finished is worse than one left open, because it tells the next person somebody
+   is still on it. Run `python scripts/leads.py resolve <id> --status
+   resolved-supported|resolved-refuted --note "tested as H-0NN"`. If the work was abandoned
+   rather than concluded, put it back with `leads.py touch <id> --status open --note "not
+   pursued"` so somebody else can take it. The lead keeps its full history either way; it is
+   never deleted.
+
 6. **Before committing, verify the git identity is set** — repo-local
    `git config user.name` and `user.email` must both return a value (the email must be the
    one they use on GitHub, or the commit won't be linked to their account). If either is
@@ -107,7 +121,9 @@ The review gate applies to sharing a finding, which is the flow below.
      researcher you're working with" and then push. In particular, if git suggests
      `git push origin HEAD:<old-name>`, **do not run it** — that recreates a retired branch
      name for the whole team.
-   - Stage **only** `findings/<name>/<slug>/` and `HYPOTHESIS_LOG.md`.
+   - Stage **only** `findings/<name>/<slug>/` and `HYPOTHESIS_LOG.md`, plus `leads/<id>.md`
+     and `LEADS.md` if step 5b applied. A lead resolved on disk and left out of the commit
+     is a lead nobody else ever sees resolved.
    - Commit with a clear message: what was found, in one line, plus a short body.
    - Push: `git push -u origin researchers/<name>`.
    - If the push is rejected because they lack access or aren't signed in, explain plainly

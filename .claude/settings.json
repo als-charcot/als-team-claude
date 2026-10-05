@@ -14,6 +14,42 @@
           }
         ]
       }
+    ],
+    "_PreToolUse_comment": "Documents are converted to markdown before Claude reads them. A PDF page reaches the model twice, as extracted text AND as a picture of the page, which Anthropic documents at 1,500-3,000 tokens per page; the markdown is the text half alone. This is a hook rather than the markitdown skill because a skill is offered to the model and may not be taken, while a hook runs every time. scripts/convert_for_read.py fails open in every failure case (markitdown missing, scanned PDF with no text layer, encrypted file): it prints nothing and the original read proceeds untouched, because a researcher must never be blocked by a speed optimisation. Each 'if' keeps python from being spawned on reads that are not documents.",
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python scripts/convert_for_read.py",
+            "if": "Read(**/*.pdf)",
+            "timeout": 130,
+            "statusMessage": "Converting document to markdown"
+          },
+          {
+            "type": "command",
+            "command": "python scripts/convert_for_read.py",
+            "if": "Read(**/*.docx)",
+            "timeout": 130,
+            "statusMessage": "Converting document to markdown"
+          },
+          {
+            "type": "command",
+            "command": "python scripts/convert_for_read.py",
+            "if": "Read(**/*.pptx)",
+            "timeout": 130,
+            "statusMessage": "Converting document to markdown"
+          },
+          {
+            "type": "command",
+            "command": "python scripts/convert_for_read.py",
+            "if": "Read(**/*.xlsx)",
+            "timeout": 130,
+            "statusMessage": "Converting document to markdown"
+          }
+        ]
+      }
     ]
   }
 }

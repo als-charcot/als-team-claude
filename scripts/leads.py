@@ -27,6 +27,12 @@ SO THE ORGANISING AXIS IS `waiting_on`, NOT the topic:
 A lead is NEVER deleted. It is resolved, superseded, or parked, and it keeps its history.
 Deleting one throws away the knowledge that somebody already looked.
 
+SCOPE: `team` (default) or `local`. A local lead is one person's own thread. It keeps its
+file, its history and its literature matching, but it stays out of LEADS.md and out of the
+cross-branch claim check, so nobody else is offered it and nobody else is blocked by it.
+Promote one with `leads.py touch <id> --scope team`. A lead with no scope field is a TEAM
+lead, because a lead wrongly shared is merely visible while a lead wrongly hidden is lost.
+
 ONE FILE PER LEAD (leads/L-00N.md, YAML-ish frontmatter + notes) so two researchers adding
 leads on different branches never collide. LEADS.md is a generated index, not the source.
 
@@ -66,6 +72,24 @@ KINDS = {
 STATUSES = ["open", "under-test", "parked", "resolved-supported",
             "resolved-refuted", "superseded"]
 LIVE = {"open", "under-test", "parked"}
+
+# A lead is either the team's to pick up, or one person's own. `local` is the private
+# default-off: the lead is still a file with a history, still matched against new
+# literature, still never deleted. It is simply not offered to anybody else, so it stays
+# out of LEADS.md and out of the cross-branch claim check. Promote with
+# `leads.py touch <id> --scope team`.
+SCOPES = {
+    "team":  "On the shared register. Anybody may pick it up",
+    "local": "Yours alone. Not indexed, and not offered to the team",
+}
+DEFAULT_SCOPE = "team"
+
+
+def scope_of(l: dict) -> str:
+    """Leads written before this field existed are team leads, which is the safe default:
+    a lead wrongly shared is visible, a lead wrongly hidden is silently lost to the team."""
+    s = (l.get("scope") or DEFAULT_SCOPE).strip()
+    return s if s in SCOPES else DEFAULT_SCOPE
 
 DEFAULT_REVIEW_DAYS = {"more-data": 180, "other-data": 180, "method": 90,
                        "external": 60, "decision": 30, "nothing": 90}
@@ -111,7 +135,7 @@ def next_id() -> str:
 
 def write_lead(d: dict, body: str) -> Path:
     LEADS_DIR.mkdir(exist_ok=True)
-    order = ["id", "title", "status", "kind", "waiting_on", "owner", "origin",
+    order = ["id", "title", "status", "kind", "waiting_on", "scope", "owner", "origin",
              "dataset", "created", "last_reviewed", "next_review", "keywords",
              "resolves_when", "estimated_n"]
     lines = ["---"]
@@ -157,9 +181,10 @@ def set_fields(l: dict, **kw) -> None:
 def fmt_row(l: dict) -> str:
     due = l.get("next_review", "")
     overdue = bool(due) and due <= today().isoformat() and l.get("status") in LIVE
-    return (f"  {l.get('id','?'):7s} {'!' if overdue else ' '} "
+    mine = "local " if scope_of(l) == "local" else "      "
+    return (f"  {l.get('id','?'):7s} {'!' if overdue else ' '} {mine}"
             f"{l.get('status','?'):18s} {l.get('waiting_on','?'):11s} "
-            f"{(l.get('title') or '')[:58]}")
+            f"{(l.get('title') or '')[:52]}")
 
 
 # ───────────────────────────── commands ──────────────────────────────
@@ -169,10 +194,13 @@ def cmd_new(a) -> int:
         print(f"--waiting-on must be one of: {', '.join(WAITING)}"); return 2
     if a.kind not in KINDS:
         print(f"--kind must be one of: {', '.join(KINDS)}"); return 2
+    scope = (a.scope or DEFAULT_SCOPE).strip()
+    if scope not in SCOPES:
+        print(f"--scope must be one of: {', '.join(SCOPES)}"); return 2
     lid = next_id()
     days = a.review_days or DEFAULT_REVIEW_DAYS[a.waiting_on]
     d = dict(id=lid, title=a.title, status="open", kind=a.kind, waiting_on=a.waiting_on,
-             owner=a.owner or "unassigned", origin=a.origin or "-",
+             scope=scope, owner=a.owner or "unassigned", origin=a.origin or "-",
              dataset=a.dataset or "-", created=today().isoformat(),
              last_reviewed=today().isoformat(),
              next_review=(today() + timedelta(days=days)).isoformat(),
@@ -186,7 +214,11 @@ def cmd_new(a) -> int:
     p = write_lead(d, body)
     print(f"created {lid}  ->  {p.relative_to(ROOT)}")
     print(f"  waiting on : {a.waiting_on}  ({WAITING[a.waiting_on]})")
+    print(f"  scope      : {scope}  ({SCOPES[scope]})")
     print(f"  next review: {d['next_review']}")
+    if scope == "local":
+        print(f"  {lid} stays off LEADS.md and out of the claim check. "
+              f"Share it with: leads.py touch {lid} --scope team")
     cmd_index(a)
     return 0
 
@@ -197,6 +229,8 @@ def cmd_list(a) -> int:
         want = getattr(a, f, None)
         if want:
             ls = [l for l in ls if l.get(f) == want]
+    if getattr(a, "scope", None):
+        ls = [l for l in ls if scope_of(l) == a.scope]
     if getattr(a, "live", False):
         ls = [l for l in ls if l.get("status") in LIVE]
     if not ls:
@@ -294,12 +328,28 @@ def cmd_touch(a) -> int:
     l = ls.get(a.lead_id)
     if not l:
         print(f"no such lead: {a.lead_id}"); return 2
+    new_scope = getattr(a, "scope", None)
+    if new_scope and new_scope not in SCOPES:
+        print(f"--scope must be one of: {', '.join(SCOPES)}"); return 2
     days = a.next or DEFAULT_REVIEW_DAYS.get(l.get("waiting_on", "nothing"), 90)
     nxt = (today() + timedelta(days=days)).isoformat()
+    was = scope_of(l)
+    new_owner = getattr(a, "owner", None)
+    was_owner = l.get("owner", "unassigned")
     set_fields(l, last_reviewed=today().isoformat(), next_review=nxt,
-               waiting_on=a.waiting_on, status=a.status)
-    append_history(l, a.note or "re-checked, still open")
+               waiting_on=a.waiting_on, status=a.status, scope=new_scope,
+               owner=new_owner)
+    note = a.note or "re-checked, still open"
+    if new_scope and new_scope != was:
+        note = f"scope {was} -> {new_scope}. {note}"
+    if new_owner and new_owner != was_owner:
+        # Who raised a lead and who takes it are routinely different people. The history
+        # keeps both; the frontmatter names whoever is on it now.
+        note = f"owner {was_owner} -> {new_owner}. {note}"
+    append_history(l, note)
     print(f"{a.lead_id} reviewed. next review {nxt}")
+    if new_scope and new_scope != was:
+        print(f"  scope is now {new_scope}  ({SCOPES[new_scope]})")
     cmd_index(a)
     return 0
 
@@ -319,7 +369,9 @@ def cmd_resolve(a) -> int:
 
 
 def cmd_index(a) -> int:
-    ls = load_all()
+    everything = load_all()
+    ls = [l for l in everything if scope_of(l) == "team"]
+    n_local = len(everything) - len(ls)
     live = [l for l in ls if l.get("status") in LIVE]
     done = [l for l in ls if l.get("status") not in LIVE]
     over = [l for l in live if (l.get("next_review") or "9") <= today().isoformat()]
@@ -334,6 +386,10 @@ def cmd_index(a) -> int:
          f"Do not edit by hand: edit the files in `leads/`.*", "",
          f"**{len(live)} open · {len(over)} due for review · {len(done)} closed**", "",
          "## Open, grouped by what they are waiting for", ""]
+    if n_local:
+        L[-2:-2] = [f"*{n_local} further lead(s) are marked `scope: local` and are deliberately "
+                    f"absent from this index. They belong to one person and are not offered to "
+                    f"the team. They are still files in `leads/` with their full history.*", ""]
     for w, desc in WAITING.items():
         grp = [l for l in live if l.get("waiting_on") == w]
         if not grp:
@@ -357,11 +413,15 @@ def cmd_index(a) -> int:
           "```", "python scripts/leads.py due                     what needs re-checking",
           "python scripts/leads.py list --waiting-on more-data",
           "python scripts/leads.py match <a research-watch index>   new papers vs open leads",
-          "python scripts/leads.py touch L-003 --note \"...\"        record a re-check", "```", ""]
+          "python scripts/leads.py touch L-003 --note \"...\"        record a re-check",
+          "python scripts/leads.py new  ... --scope local           keep a lead to yourself",
+          "python scripts/leads.py touch L-003 --scope team         offer it to the team", "```", ""]
     INDEX.write_text("\n".join(L), encoding="utf-8")
     if getattr(a, "_quiet", False):
         return 0
-    print(f"index written: {INDEX.name}  ({len(live)} open, {len(over)} due, {len(done)} closed)")
+    tail = f", {n_local} local and not indexed" if n_local else ""
+    print(f"index written: {INDEX.name}  ({len(live)} open, {len(over)} due, "
+          f"{len(done)} closed{tail})")
     return 0
 
 
@@ -379,11 +439,13 @@ def main() -> int:
     n.add_argument("--resolves-when", dest="resolves_when")
     n.add_argument("--estimated-n", dest="estimated_n")
     n.add_argument("--review-days", type=int, dest="review_days")
+    n.add_argument("--scope", choices=sorted(SCOPES),
+                   help="team (default, on the shared register) or local (yours alone)")
     n.add_argument("--note")
     n.set_defaults(f=cmd_new)
 
     l = sub.add_parser("list", help="list leads")
-    for x in ("waiting-on", "kind", "owner", "status"):
+    for x in ("waiting-on", "kind", "owner", "status", "scope"):
         l.add_argument(f"--{x}", dest=x.replace("-", "_"))
     l.add_argument("--live", action="store_true", help="only open/under-test/parked")
     l.set_defaults(f=cmd_list)
@@ -402,6 +464,9 @@ def main() -> int:
     t.add_argument("lead_id"); t.add_argument("--note")
     t.add_argument("--next", type=int, help="days until the next review")
     t.add_argument("--waiting-on", dest="waiting_on"); t.add_argument("--status")
+    t.add_argument("--owner", help="who is on it now, which is not always who raised it")
+    t.add_argument("--scope", choices=sorted(SCOPES),
+                   help="promote a local lead to the team register, or take one back")
     t.set_defaults(f=cmd_touch)
 
     r = sub.add_parser("resolve", help="close a lead, keeping it in the register")

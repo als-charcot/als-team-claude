@@ -72,6 +72,10 @@ get others' updates.
    lead is **never deleted** — it is resolved, superseded or parked, and it keeps its
    history. Re-check what is due (`leads.py due`), and when new literature arrives connect it
    to open questions (`leads.py match`). Leads never count as prior art.
+   A lead is `scope: team` by default. `--scope local` keeps it to one person: it still has a
+   file, a history and its literature matching, but it stays out of `LEADS.md` and out of the
+   cross-branch claim check, so nobody else is offered it and nobody else is blocked by it.
+   Promote one with `leads.py touch <id> --scope team`.
 6. **Run the methodology-pitfall checklist** (`references/methodology_pitfalls.md`)
    against any cohort finding before accepting it.
 
@@ -256,14 +260,22 @@ confirm it with them before acting.
 Ask the user what they need to know about the data and which hypothesis or question
 to test before running an analysis.
 
-**Then check for prior art — every time, before running anything:** search
-`HYPOTHESIS_LOG.md` and `findings/` for entries touching the same question, variables, or
-forms. If something exists, tell the researcher **who** tested **what**, **when**, on **which
-dataset and release**, with which cohort and inputs, and what came of it — and note
-explicitly whether their question differs in dataset, cohort, or method, because **the same
-hypothesis on new data or a new cohort is a genuine new contribution, not a duplicate** — then ask whether to build on it, replicate it, or
-proceed differently. Duplicating a colleague's test unknowingly wastes a week; building on
-it is the whole point of the log.
+**Then check for prior art — every time, before running anything:** run
+`python scripts/prior_art.py check "<the question in one sentence>"`. It reads the lead
+register and the hypothesis log on **every** branch, so a question a colleague claimed this
+morning is visible to you before the maintainer has merged anything. It exits non-zero when
+something live overlaps. **It gathers candidates by matching words; deciding whether two
+questions are really the same one is your job, not the script's** — read the entries it
+prints. Then tell the researcher **who** tested **what**, **when**, on **which dataset and
+release**, with which cohort and inputs, and what came of it, and say explicitly whether
+their question differs in dataset, cohort, or method, because **the same hypothesis on new
+data or a new cohort is a genuine new contribution rather than a duplicate**. Then ask
+whether to build on it, replicate it, or proceed differently. Duplicating a colleague's test
+unknowingly wastes a week; building on it is the whole point of the log.
+
+Two companions: `prior_art.py running` answers "what is the team working on?" with the age of
+every unclosed claim, and `prior_art.py next-id --kind L|H` allocates an id from the maximum
+across all branches so two people on different branches cannot mint the same one.
 
 **Then register the intent before running.** Use the **share-work** skill's *registering a
 question* flow: it appends an entry with **Status: Under analysis** (owner, date, hypothesis,
