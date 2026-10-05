@@ -11,12 +11,43 @@
           {
             "type": "command",
             "command": "python scripts/check_my_branch.py 2>/dev/null || true"
+          },
+          {
+            "type": "command",
+            "command": "python scripts/team_state.py digest --full --hook-event SessionStart 2>/dev/null || true",
+            "timeout": 30,
+            "statusMessage": "Reading what the team has been doing"
+          }
+        ]
+      }
+    ],
+    "_UserPromptSubmit_comment": "The team's current state rides along with every question, so Claude cannot take on a piece of research while unaware of what is already claimed. Checking prior art used to depend on a paragraph in CLAUDE.md asking Claude to do it, and a paragraph is a wish rather than a guard. This reads a cache written at session start and never touches the network, so it costs about a tenth of a second and a dozen lines. It prints nothing if the cache is missing or unreadable.",
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python scripts/team_state.py digest --brief --hook-event UserPromptSubmit 2>/dev/null || true",
+            "timeout": 15
           }
         ]
       }
     ],
     "_PreToolUse_comment": "Documents are converted to markdown before Claude reads them. A PDF page reaches the model twice, as extracted text AND as a picture of the page, which Anthropic documents at 1,500-3,000 tokens per page; the markdown is the text half alone. This is a hook rather than the markitdown skill because a skill is offered to the model and may not be taken, while a hook runs every time. scripts/convert_for_read.py fails open in every failure case (markitdown missing, scanned PDF with no text layer, encrypted file): it prints nothing and the original read proceeds untouched, because a researcher must never be blocked by a speed optimisation. Each 'if' keeps python from being spawned on reads that are not documents.",
+    "_PreToolUse_registration_comment": "A finding cannot reach the team without a registration behind it. You cannot mechanically stop somebody running an analysis, and you should not try; what you can do is make the result unshareable until the question was declared. The push is the only moment the whole team is about to be affected, which makes it the one place a refusal is both enforceable and fair. check_registration.py refuses on a definite violation and ALLOWS, loudly, when it cannot check (no upstream, git unavailable, unreadable log): a crashed guard that strands a non-coder mid-push is a worse failure than the one it prevents.",
     "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python scripts/check_registration.py",
+            "if": "Bash(git push*)",
+            "timeout": 30,
+            "statusMessage": "Checking the question was registered"
+          }
+        ]
+      },
       {
         "matcher": "Read",
         "hooks": [

@@ -260,6 +260,12 @@ confirm it with them before acting.
 Ask the user what they need to know about the data and which hypothesis or question
 to test before running an analysis.
 
+**You already have the board.** A `TEAM STATE` block is injected into context at the start of
+every session and alongside every prompt, listing what is claimed right now, by whom, and
+which questions are open and unblocked. It is produced by `scripts/team_state.py` from a live
+read of every branch, so treat it as authoritative rather than asking the researcher what the
+team is doing. It replaces nothing below; it means you are never starting blind.
+
 **Then check for prior art — every time, before running anything:** run
 `python scripts/prior_art.py check "<the question in one sentence>"`. It reads the lead
 register and the hypothesis log on **every** branch, so a question a colleague claimed this

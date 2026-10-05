@@ -21,3 +21,6 @@ Thumbs.db
 
 # Markdown produced by the document-conversion hook. Derived, never shared.
 /.converted/
+
+# Cached cross-branch state for the session hooks. Derived, never shared.
+/.state/
