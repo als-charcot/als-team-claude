@@ -49,11 +49,34 @@ def quiet(*_a) -> None:
     sys.exit(0)
 
 
+def fold_by_id(rows: list[dict]) -> list[dict]:
+    """One row per id, preferring the version on the trunk.
+
+    Every branch carries a full copy of HYPOTHESIS_LOG.md, so a branch that has not merged
+    recently still holds the previous wording of an entry. `prior_art.harvest` keeps those
+    versions apart on purpose, because divergence is worth seeing when you are asking who
+    is working on what. In a digest it is just noise: the same finding listed twice is read
+    as two findings. So fold to one row per id here, take the trunk's wording as the truth,
+    and say how many branches are carrying something older."""
+    by: dict[str, list[dict]] = {}
+    for r in rows:
+        by.setdefault(r["id"], []).append(r)
+    out = []
+    for rid, versions in sorted(by.items()):
+        best = next((v for v in versions if "main" in (v.get("_refs") or [])), versions[0])
+        if len(versions) > 1:
+            best = {**best, "behind": len(versions) - 1}
+        out.append(best)
+    return out
+
+
 def collect() -> dict:
     import prior_art as pa
 
     refs = pa.branches()
     leads, hyps = pa.harvest(refs)
+    hyps = fold_by_id(hyps)
+    leads = fold_by_id(leads)
     me = (pa.git("config", "--local", "user.name") or "").strip()
     branch = (pa.git("rev-parse", "--abbrev-ref", "HEAD") or "").strip()
 
@@ -81,6 +104,7 @@ def collect() -> dict:
         "done": [{"id": h["id"], "title": h.get("title", "")[:60],
                   "owner": h.get("owner", "?"), "status": h.get("status", "")}
                  for h in hyps if not live_h(h)],
+        "stale_branches": max((h.get("behind", 0) for h in hyps), default=0),
     }
 
 
