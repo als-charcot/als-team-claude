@@ -19,28 +19,28 @@ their history, because the record that somebody already looked is worth keeping.
 
 | id | lead | kind | owner | next review |
 |---|---|---|---|---|
-| [L-003](leads/L-003.md) | Does the NfL to decline-rate association hold in bulbar-onset patients? | data-gap | manu | 2027-03-13 |
-| [L-005](leads/L-005.md) | Would a cohort with censored survival make the NfL-survival question testable? | data-gap | manu | 2027-03-13 |
-| [L-007](leads/L-007.md) | Does riluzole modify the NfL to decline-rate association? | withdrawn-claim | manu | 2027-03-13 |
+| [L-003](leads/L-003.md) | Does the NfL to decline-rate association hold in bulbar-onset patients? | data-gap | emmanuelmompi-charcot | 2027-03-13 |
+| [L-005](leads/L-005.md) | Would a cohort with censored survival make the NfL-survival question testable? | data-gap | emmanuelmompi-charcot | 2027-03-13 |
+| [L-007](leads/L-007.md) | Does riluzole modify the NfL to decline-rate association? | withdrawn-claim | emmanuelmompi-charcot | 2027-03-13 |
 
 ### `method` — The data is here; the right method has not been applied
 
 | id | lead | kind | owner | next review |
 |---|---|---|---|---|
-| [L-001](leads/L-001.md) | Does a joint survival+longitudinal model recover a larger bulbar-limb gap? | method-gap | manu | 2026-12-13 |
+| [L-001](leads/L-001.md) | Does a joint survival+longitudinal model recover a larger bulbar-limb gap? | method-gap | emmanuelmompi-charcot | 2026-12-13 |
 
 ### `external` — Waiting on evidence from outside (a paper, a trial readout, a release)
 
 | id | lead | kind | owner | next review |
 |---|---|---|---|---|
-| [L-006](leads/L-006.md) | Is the serum-to-plasma NfL cutoff mapping recoverable? | external-claim | manu | 2026-11-13 |
+| [L-006](leads/L-006.md) | Is the serum-to-plasma NfL cutoff mapping recoverable? | external-claim | emmanuelmompi-charcot | 2026-11-13 |
 
 ### `nothing` — Actionable right now, nobody has picked it up
 
 | id | lead | kind | owner | next review |
 |---|---|---|---|---|
-| [L-002](leads/L-002.md) | Can FVC% + onset + baseline ALSFRS-R + age reach useful prognostic R-squared? | method-gap | manu | 2026-12-13 |
-| [L-004](leads/L-004.md) | Can a longitudinal NfL slope outperform a single baseline NfL draw? | method-gap | manu | 2026-12-13 |
+| [L-002](leads/L-002.md) | Can FVC% + onset + baseline ALSFRS-R + age reach useful prognostic R-squared? | method-gap | emmanuelmompi-charcot | 2026-12-13 |
+| [L-004](leads/L-004.md) | Can a longitudinal NfL slope outperform a single baseline NfL draw? | method-gap | emmanuelmompi-charcot | 2026-12-13 |
 
 ## How to use it
 

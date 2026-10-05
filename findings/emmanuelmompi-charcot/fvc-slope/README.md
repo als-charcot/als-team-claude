@@ -1,6 +1,6 @@
 # fvc-slope — ALSFRS-R decline by onset site, and baseline FVC as a predictor
 
-**Owner:** Manu · **Date:** 2026-08-24 · **Cohort:** PRO-ACT (de-identified)
+**Owner:** emmanuelmompi-charcot · **Date:** 2026-08-24 · **Cohort:** PRO-ACT (de-identified)
 
 ## Questions
 

@@ -1,6 +1,6 @@
 # H-002 — Blood neurofilament light chain (NfL) vs ALSFRS-R decline slope (PRO-ACT)
 
-**Owner:** Manu · **Dataset:** PRO-ACT (`data/PROACT_ALL_FORMS`, local snapshot) · **Date:** 2026-09-07
+**Owner:** emmanuelmompi-charcot · **Dataset:** PRO-ACT (`data/PROACT_ALL_FORMS`, local snapshot) · **Date:** 2026-09-07
 
 ## Question
 
@@ -46,7 +46,7 @@ CSF outlier). See the report's *Withdrawn / demoted claims* section.
 ## How to re-run
 
 ```
-projects/manu/nfl-alsfrs-slope/.venv/Scripts/python.exe projects/manu/nfl-alsfrs-slope/scripts/analysis.py
+projects/emmanuelmompi-charcot/nfl-alsfrs-slope/.venv/Scripts/python.exe projects/emmanuelmompi-charcot/nfl-alsfrs-slope/scripts/analysis.py
 ```
 
 Reads `data/PROACT_ALL_FORMS/` (serum NfL, ALSFRS-R, death, demographics, ALS history); writes

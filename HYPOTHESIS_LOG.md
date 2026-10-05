@@ -19,7 +19,7 @@ Entries are numbered H-001, H-002, … newest at the bottom.
 ## H-001 — ALSFRS-R decline by onset site, and baseline FVC as a predictor
 
 - **Status:** Supported (weak)
-- **Owner:** Manu
+- **Owner:** emmanuelmompi-charcot
 - **Date:** 2026-08-24
 
 **Hypothesis:** (1) Mean ALSFRS-R decline slope differs by onset site (bulbar ≠ limb);
@@ -41,7 +41,7 @@ distributions overlap heavily. Lower baseline FVC% predicts faster decline: **Pe
 [0.16, 0.25], n = 1,766; adjusted β = 0.0135 pts/mo per FVC-point (p = 2.8e-14), stable under
 adjustment (adj. R² ≈ 0.14). Both real, both weak; observational.
 
-**Evidence:** `findings/manu/fvc-slope/` — report.pdf, analysis.py, 3 figures, README.
+**Evidence:** `findings/emmanuelmompi-charcot/fvc-slope/` — report.pdf, report.md, analysis.py, 3 figures, README.
 
 **Open questions:** Does a joint survival + longitudinal model (correcting for early-dropout
 survivorship) recover a larger bulbar–limb gap? Does combining FVC% + onset + baseline
@@ -52,7 +52,7 @@ ALSFRS-R + age reach useful prognostic R²?
 ## H-002 — Blood neurofilament light chain (NfL) vs ALSFRS-R decline slope and survival
 
 - **Status:** Supported (H1, primary); H2 (survival) Inconclusive — not adequately testable
-- **Owner:** Manu
+- **Owner:** emmanuelmompi-charcot
 - **Date:** 2026-09-07 (closed 2026-09-07)
 
 **Hypothesis:** In PRO-ACT, (1) higher baseline serum **NfL** is associated with a faster
@@ -106,7 +106,7 @@ null on its own terms and is not a mortality hazard ratio.
   re-expression); Cox mortality HR (demoted to collider-biased within-decedent rank); "max 27,212 pg/mL"
   (corrected → 840, was an excluded CSF outlier).
 
-**Evidence:** `projects/manu/nfl-alsfrs-slope/` — `scripts/analysis.py`, `outputs/report.md` (+ PDF),
+**Evidence:** `findings/emmanuelmompi-charcot/nfl-alsfrs-slope/` — `analysis.py`, `report.md` (+ PDF),
 `fig1`–`fig4`, `claims.json`, `results.json`. Local, not yet promoted.
 
 **Open questions:** Does the association hold in a bulbar-onset cohort (absent here)? Can a

@@ -1,6 +1,6 @@
 # Baseline blood neurofilament light chain (**NfL**) as a correlate of **ALSFRS-R** decline rate in PRO-ACT
 
-**Experiment:** `projects/manu/nfl-alsfrs-slope` · **Hypothesis-log ID:** H-002 · **Owner:** Manu
+**Experiment:** `projects/emmanuelmompi-charcot/nfl-alsfrs-slope` · **Hypothesis-log ID:** H-002 · **Owner:** emmanuelmompi-charcot
 **Date:** 2026-09-07 · **Dataset:** PRO-ACT (`data/PROACT_ALL_FORMS`, local snapshot)
 **Status:** closed by adversarial review (4 independent lenses); see *Withdrawn / demoted claims*.
 
@@ -282,8 +282,8 @@ larger cohort, not a duplication.
 
 ## Reproducibility
 
-- **Script:** `projects/manu/nfl-alsfrs-slope/scripts/analysis.py` (end-to-end; also `recon.py`).
-- **Standing gate:** `projects/manu/nfl-alsfrs-slope/claims.json` ties every headline number to
+- **Script:** `projects/emmanuelmompi-charcot/nfl-alsfrs-slope/scripts/analysis.py` (end-to-end; also `recon.py`).
+- **Standing gate:** `projects/emmanuelmompi-charcot/nfl-alsfrs-slope/claims.json` ties every headline number to
   the pipeline output (`python .claude/skills/adversarial-review/scripts/claim_audit.py claims.json --root .`).
 - **Environment:** `.venv` (pandas, numpy, scipy, statsmodels, lifelines, plotly, kaleido).
 - **Run:** `…/.venv/Scripts/python.exe …/scripts/analysis.py`

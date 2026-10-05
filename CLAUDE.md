@@ -162,6 +162,20 @@ language**, then offer the allowed alternative (e.g. the PDF plus a static PNG).
 - **Push only to `researchers/<name>`**, the current researcher's own branch — never
   anyone else's.
 
+### One identity, spelled one way
+
+**A person's GitHub username is their identity everywhere in this repo**, with no display
+names and no shortenings: the branch `researchers/<username>`, the folder
+`findings/<username>/`, the `projects/<username>/` working area, the `**Owner:**` line in
+`HYPOTHESIS_LOG.md`, the `owner:` field on a lead, and the repo-local `git config user.name`.
+Six places, one string.
+
+This is not tidiness. Every guard that keys off a person — the branch check, the claim check,
+the registration check on push — can only be as strict as the weakest of those six agreeing.
+When one entry said `Manu` and another said `emmanuelmompi-charcot`, the registration guard
+had to downgrade an owner mismatch from a refusal to a warning, which is the whole system
+running at reduced strength because of a spelling.
+
 ### Knowing which researcher you're working with
 
 You start every session knowing nothing — the **clone carries the identity**, so derive it
