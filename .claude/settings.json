@@ -10,11 +10,11 @@
           },
           {
             "type": "command",
-            "command": "python scripts/check_my_branch.py 2>/dev/null || true"
+            "command": "python3 scripts/check_my_branch.py 2>/dev/null || python scripts/check_my_branch.py 2>/dev/null || true"
           },
           {
             "type": "command",
-            "command": "python scripts/team_state.py digest --full --hook-event SessionStart 2>/dev/null || true",
+            "command": "python3 scripts/team_state.py digest --full --hook-event SessionStart 2>/dev/null || python scripts/team_state.py digest --full --hook-event SessionStart 2>/dev/null || true",
             "timeout": 30,
             "statusMessage": "Reading what the team has been doing"
           }
@@ -27,22 +27,34 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python scripts/team_state.py digest --brief --hook-event UserPromptSubmit 2>/dev/null || true",
+            "command": "python3 scripts/team_state.py digest --brief --hook-event UserPromptSubmit 2>/dev/null || python scripts/team_state.py digest --brief --hook-event UserPromptSubmit 2>/dev/null || true",
             "timeout": 15
           }
         ]
       }
     ],
     "_PreToolUse_comment": "Documents are converted to markdown before Claude reads them. A PDF page reaches the model twice, as extracted text AND as a picture of the page, which Anthropic documents at 1,500-3,000 tokens per page; the markdown is the text half alone. This is a hook rather than the markitdown skill because a skill is offered to the model and may not be taken, while a hook runs every time. scripts/convert_for_read.py fails open in every failure case (markitdown missing, scanned PDF with no text layer, encrypted file): it prints nothing and the original read proceeds untouched, because a researcher must never be blocked by a speed optimisation. Each 'if' keeps python from being spawned on reads that are not documents.",
-    "_PreToolUse_registration_comment": "A finding cannot reach the team without a registration behind it. You cannot mechanically stop somebody running an analysis, and you should not try; what you can do is make the result unshareable until the question was declared. The push is the only moment the whole team is about to be affected, which makes it the one place a refusal is both enforceable and fair. check_registration.py refuses on a definite violation and ALLOWS, loudly, when it cannot check (no upstream, git unavailable, unreadable log): a crashed guard that strands a non-coder mid-push is a worse failure than the one it prevents.",
+    "_PreToolUse_registration_comment": "A finding cannot reach the team without a registration behind it. You cannot mechanically stop somebody running an analysis, and you should not try; what you can do is make the result unshareable until the question was declared. The push is the only moment the whole team is about to be affected, which makes it the one place a refusal is both enforceable and fair. check_registration.py refuses on a definite violation and ALLOWS, loudly, when it cannot check (no upstream, git unavailable, unreadable log): a crashed guard that strands a non-coder mid-push is a worse failure than the one it prevents. THERE ARE TWO SHELLS AND THE GUARD MUST COVER BOTH. A matcher on Bash alone left the whole rule unenforced on Windows, where Claude Code also has a PowerShell tool, which is the platform most of this team uses. Found by running the setup on a real desktop rather than by reasoning about it. Any future guard on a shell command needs both entries or it has a second door.",
     "PreToolUse": [
       {
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "python scripts/check_registration.py",
+            "command": "python3 scripts/check_registration.py || python scripts/check_registration.py",
             "if": "Bash(git push*)",
+            "timeout": 30,
+            "statusMessage": "Checking the question was registered"
+          }
+        ]
+      },
+      {
+        "matcher": "PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 scripts/check_registration.py || python scripts/check_registration.py",
+            "if": "PowerShell(git push*)",
             "timeout": 30,
             "statusMessage": "Checking the question was registered"
           }
@@ -53,28 +65,28 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python scripts/convert_for_read.py",
+            "command": "python3 scripts/convert_for_read.py || python scripts/convert_for_read.py",
             "if": "Read(**/*.pdf)",
             "timeout": 130,
             "statusMessage": "Converting document to markdown"
           },
           {
             "type": "command",
-            "command": "python scripts/convert_for_read.py",
+            "command": "python3 scripts/convert_for_read.py || python scripts/convert_for_read.py",
             "if": "Read(**/*.docx)",
             "timeout": 130,
             "statusMessage": "Converting document to markdown"
           },
           {
             "type": "command",
-            "command": "python scripts/convert_for_read.py",
+            "command": "python3 scripts/convert_for_read.py || python scripts/convert_for_read.py",
             "if": "Read(**/*.pptx)",
             "timeout": 130,
             "statusMessage": "Converting document to markdown"
           },
           {
             "type": "command",
-            "command": "python scripts/convert_for_read.py",
+            "command": "python3 scripts/convert_for_read.py || python scripts/convert_for_read.py",
             "if": "Read(**/*.xlsx)",
             "timeout": 130,
             "statusMessage": "Converting document to markdown"
@@ -82,5 +94,6 @@
         ]
       }
     ]
-  }
+  },
+  "_portability_comment": "Hook commands say `python3 ... || python ...` because macOS commonly has no `python` on PATH, only `python3`, and roughly half this team is on a Mac. Every hook here either ends in `|| true` or exits 0 on failure, so with a bare `python` they were all silently doing nothing on those machines, including the registration guard that enforces the one rule this project treats as non-negotiable. Found by running the setup on real hardware rather than by reasoning about it. Any hook added later needs the same two-name form."
 }
