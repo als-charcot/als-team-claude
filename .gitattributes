@@ -1,3 +1,13 @@
 # The hypothesis log is append-only: every researcher adds entries at the end, and main
 # gains entries too. A normal merge would conflict on that. "union" keeps both sides.
 HYPOTHESIS_LOG.md merge=union
+
+# Binary deliverables must never get EOL conversion or text treatment. Some PDFs (e.g.
+# reportlab output) contain no NUL byte, so git's auto-detection wrongly treats them as
+# text and autocrlf can corrupt them. Mark them binary explicitly.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
